@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'desktop/home/home_page.dart';
+import 'desktop/real_estate/real_estate.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFFD700)),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      initialRoute: '/home',
+      routes: {
+        '/home': (context) => const HomePage(),
+        '/real-estate': (context) => const RealEstatePage(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }

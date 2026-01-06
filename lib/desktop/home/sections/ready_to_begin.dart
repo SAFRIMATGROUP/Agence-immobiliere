@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../constants/colors.app.dart';
+import '../../../widgets/custom_text.dart';
 
 class ReadyToBeginSection extends StatelessWidget {
   const ReadyToBeginSection({super.key});
@@ -30,59 +31,31 @@ class ReadyToBeginSection extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 100),
         child: Center(
           child: SizedBox(
-            width: size.width * 0.6, // Contenu centré à 60%
+            width: size.width * 0.6, 
             child: Column(
               children: [
-                // --- TITRE PRINCIPAL SUR L'IMAGE ---
-                RichText(
+                CustomText(
+                  text: "Trouvez Votre Bien Immobilier Idéal",
+                  type: CustomTextType.hero,
                   textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: const TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      height: 1.2,
-                      shadows: [
-                        Shadow(offset: Offset(0, 2), blurRadius: 4, color: Colors.black45),
-                      ],
-                    ),
-                    children: [
-                      const TextSpan(text: "Trouvez Votre Bien "),
-                      const TextSpan(
-                        text: "Immobilier",
-                        style: TextStyle(color: AppColors.primary),
-                      ),
-                      const TextSpan(text: " Idéal"),
-                    ],
-                  ),
                 ),
                 
                 const SizedBox(height: 24),
                 
-                // SOUS-TITRE
                 SizedBox(
                   width: 600,
-                  child: Text(
-                    "Rejoignez des milliers de clients satisfaits qui ont fait confiance à notre expertise pour réaliser leur projet immobilier.",
+                  child: CustomText(
+                    text: "Rejoignez des milliers de clients satisfaits qui ont fait confiance à notre expertise pour réaliser leur projet immobilier.",
+                    type: CustomTextType.textWhite,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      height: 1.5,
-                      shadows: [
-                        Shadow(offset: Offset(0, 1), blurRadius: 2, color: Colors.black45),
-                      ],
-                    ),
                   ),
                 ),
                 
                 const SizedBox(height: 60),
                 
-                // --- BOUTONS D'ACTION ---
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Bouton principal
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
@@ -94,18 +67,15 @@ class ReadyToBeginSection extends StatelessWidget {
                         ),
                         elevation: 0,
                       ),
-                      child: const Text(
-                        "Voir Nos Biens",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: CustomText(
+                        text: "Voir Nos Biens",
+                        type: CustomTextType.buttonWhite,
+                        fontSize: 16,
                       ),
                     ),
                     
                     const SizedBox(width: 20),
                     
-                    // Bouton secondaire
                     OutlinedButton(
                       onPressed: () {},
                       style: OutlinedButton.styleFrom(
@@ -116,12 +86,10 @@ class ReadyToBeginSection extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
-                        "Nous Contacter",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: CustomText(
+                        text: "Nous Contacter",
+                        type: CustomTextType.buttonWhite,
+                        fontSize: 16,
                       ),
                     ),
                   ],

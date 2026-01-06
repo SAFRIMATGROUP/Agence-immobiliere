@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../../constants/colors.app.dart';
-import '../../../constants/text_styles.app.dart';
+import '../../../widgets/custom_text.dart';
 
 class TestimonialsSection extends StatefulWidget {
   const TestimonialsSection({super.key});
@@ -11,11 +11,7 @@ class TestimonialsSection extends StatefulWidget {
 }
 
 class _TestimonialsSectionState extends State<TestimonialsSection> {
-  // MODIF 1 : On commence à une page élevée (1000) pour permettre le scroll arrière infini
-  // 1000 est divisible par 4 (nb témoignages), donc ça commence bien au premier item.
   late final PageController _pageController = PageController(initialPage: 1000);
-  
-  // On garde un index "réel" (0, 1, 2, 3) pour les points indicateurs
   int _realIndex = 0;
   Timer? _timer;
 
@@ -61,8 +57,6 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
 
   void _startAutoScroll() {
     _timer = Timer.periodic(const Duration(seconds: 6), (timer) {
-      // MODIF 2 : Plus besoin de vérifier si on est à la fin.
-      // On avance juste tout le temps vers la droite.
       _pageController.nextPage(
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
@@ -86,28 +80,22 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
           padding: const EdgeInsets.symmetric(vertical: 80),
           child: Column(
             children: [
-              // --- HEADER ---
-              const Text(
-                "TÉMOIGNAGES",
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.5,
-                  fontSize: 12,
-                ),
+              const CustomText(
+                text: "TÉMOIGNAGES",
+                type: CustomTextType.button,
+                fontSize: 12,
               ),
               const SizedBox(height: 16),
-              Text(
-                "Ce Que Disent Nos Clients",
-                style: AppTextStyles.sectionTitle.copyWith(fontSize: 40),
+              const CustomText(
+                text: "Ce Que Disent Nos Clients",
+                type: CustomTextType.sectionBlack,
+                fontSize: 40,
               ),
               
               const SizedBox(height: 60),
 
-              // --- ZONE DU SLIDER ---
               Row(
                 children: [
-                  // Flèche Gauche
                   _buildArrowButton(
                     icon: Icons.chevron_left,
                     onTap: () {
@@ -119,24 +107,17 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                     },
                   ),
 
-                  // Le Contenu (Carte)
                   Expanded(
                     child: SizedBox(
                       height: 400,
                       child: PageView.builder(
                         controller: _pageController,
                         clipBehavior: Clip.none,
-                        // MODIF 3 : On enlève itemCount pour rendre la liste "infinie"
-                        // itemCount: _testimonials.length, <--- SUPPRIMÉ
-                        
                         onPageChanged: (index) {
-                          // MODIF 4 : On utilise le Modulo (%) pour savoir sur quel point on est
-                          // Si index est 1004 et qu'on a 4 items, 1004 % 4 = 0 (Le premier point)
                           setState(() => _realIndex = index % _testimonials.length);
                         },
                         
                         itemBuilder: (context, index) {
-                          // MODIF 5 : Accès aux données avec le Modulo
                           final testimonialIndex = index % _testimonials.length;
                           
                           return Padding(
@@ -148,7 +129,6 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                     ),
                   ),
 
-                  // Flèche Droite
                   _buildArrowButton(
                     icon: Icons.chevron_right,
                     onTap: () {
@@ -164,7 +144,6 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
 
               const SizedBox(height: 10),
 
-              // --- INDICATEURS (Points) ---
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(_testimonials.length, (index) {
@@ -172,7 +151,6 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                     duration: const Duration(milliseconds: 300),
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     height: 8,
-                    // MODIF 6 : On compare avec _realIndex
                     width: _realIndex == index ? 24 : 8,
                     decoration: BoxDecoration(
                       color: _realIndex == index 
@@ -215,7 +193,6 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   }
 }
 
-// --- WIDGET CARTE INTERNE ---
 class _TestimonialCard extends StatelessWidget {
   final Map<String, dynamic> data;
 
@@ -249,14 +226,11 @@ class _TestimonialCard extends StatelessWidget {
                 children: List.generate(5, (index) => const Icon(Icons.star, color: AppColors.primary, size: 20)),
               ),
               const SizedBox(height: 24),
-              Text(
-                "\"${data['content']}\"",
+              CustomText(
+                text: "\"${data['content']}\"",
+                type: CustomTextType.body,
+                fontSize: 18,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.body.copyWith(
-                  fontSize: 18,
-                  color: const Color(0xFF0F172A),
-                  height: 1.6,
-                ),
               ),
               const SizedBox(height: 32),
               Row(
@@ -275,20 +249,15 @@ class _TestimonialCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        data['name'],
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Color(0xFF0F172A),
-                        ),
+                      CustomText(
+                        text: data['name'],
+                        type: CustomTextType.subtitle,
+                        fontSize: 16,
                       ),
-                      Text(
-                        data['role'],
-                        style: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontSize: 14,
-                        ),
+                      CustomText(
+                        text: data['role'],
+                        type: CustomTextType.caption,
+                        fontSize: 14,
                       ),
                     ],
                   ),

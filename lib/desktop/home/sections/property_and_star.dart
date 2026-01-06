@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../constants/colors.app.dart';
+import '../../../widgets/custom_text.dart';
 
 class PropertyAndStarSection extends StatelessWidget {
   const PropertyAndStarSection({super.key});
@@ -14,7 +15,6 @@ class PropertyAndStarSection extends StatelessWidget {
       'rooms': '5',
       'bathrooms': '3',
       'type': 'À VENDRE',
-      'isFeatured': true,
     },
     {
       'image': 'assets/images/imagesWeb/long_sejour.png',
@@ -25,7 +25,6 @@ class PropertyAndStarSection extends StatelessWidget {
       'rooms': '3',
       'bathrooms': '2',
       'type': 'À LOUER',
-      'isFeatured': true,
     },
     {
       'image': 'assets/images/imagesWeb/mini_villa.png',
@@ -36,7 +35,6 @@ class PropertyAndStarSection extends StatelessWidget {
       'rooms': '6',
       'bathrooms': '4',
       'type': 'À VENDRE',
-      'isFeatured': true,
     },
     {
       'image': 'assets/images/imagesWeb/maison_dhote.png',
@@ -47,7 +45,6 @@ class PropertyAndStarSection extends StatelessWidget {
       'rooms': '4',
       'bathrooms': '3',
       'type': 'À VENDRE',
-      'isFeatured': true,
     },
     {
       'image': 'assets/images/imagesWeb/residence_alice.png',
@@ -58,7 +55,6 @@ class PropertyAndStarSection extends StatelessWidget {
       'rooms': '2',
       'bathrooms': '2',
       'type': 'À LOUER',
-      'isFeatured': true,
     },
     {
       'image': 'assets/images/imagesWeb/residence_crystal.png',
@@ -69,66 +65,53 @@ class PropertyAndStarSection extends StatelessWidget {
       'rooms': '1',
       'bathrooms': '1',
       'type': 'À VENDRE',
-      'isFeatured': true,
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    
+
     return Center(
       child: SizedBox(
-        width: size.width * 0.6, // 60% de la largeur totale
+        width: size.width * 0.6,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 80),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // En-tête avec titre et bouton
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Titre de la section
-                  Expanded(
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "BIENS EN VEDETTE",
-                          style: TextStyle(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.5,
-                            fontSize: 14,
-                          ),
+                        CustomText(
+                          text: "BIENS EN VEDETTE",
+                          type: CustomTextType.button,
+                          fontSize: 14,
                         ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          "Découvrez Nos Propriétés",
-                          style: TextStyle(
-                            fontSize: 36,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF0F172A),
-                            fontFamily: 'Serif',
-                          ),
+                        SizedBox(height: 16),
+                        CustomText(
+                          text: "Découvrez Nos Propriétés",
+                          type: CustomTextType.sectionBlack,
                         ),
                       ],
                     ),
                   ),
-                  
-                  const SizedBox(height: 16),
-                  
-                  // Bouton "Voir Tous les Biens"
                   Padding(
-                    padding: const EdgeInsets.only(top: 90), // Plus d'espace pour aligner avec "Découvrez Nos Propriétés"
+                    padding: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: AppColors.background,
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 16,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                           side: BorderSide(color: Colors.grey.shade300),
@@ -137,12 +120,10 @@ class PropertyAndStarSection extends StatelessWidget {
                       child: const Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            'Voir Tous les Biens',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          CustomText(
+                            text: 'Voir Tous les Biens',
+                            type: CustomTextType.button,
+                            fontSize: 16,
                           ),
                           SizedBox(width: 8),
                           Icon(Icons.arrow_forward, size: 18),
@@ -152,23 +133,18 @@ class PropertyAndStarSection extends StatelessWidget {
                   ),
                 ],
               ),
-              
               const SizedBox(height: 60),
-              
-              // Grille de propriétés
               LayoutBuilder(
                 builder: (context, constraints) {
                   const double spacing = 24;
-                  final double cardWidth = (constraints.maxWidth - (spacing * 2)) / 3;
-                  
+                  final double cardWidth =
+                      (constraints.maxWidth - (spacing * 2)) / 3;
+
                   return Wrap(
                     spacing: spacing,
                     runSpacing: spacing,
                     children: _properties.map((property) {
-                      return PropertyCard(
-                        width: cardWidth,
-                        property: property,
-                      );
+                      return PropertyCard(width: cardWidth, property: property);
                     }).toList(),
                   );
                 },
@@ -185,11 +161,7 @@ class PropertyCard extends StatefulWidget {
   final double width;
   final Map<String, dynamic> property;
 
-  const PropertyCard({
-    super.key,
-    required this.width,
-    required this.property,
-  });
+  const PropertyCard({super.key, required this.width, required this.property});
 
   @override
   State<PropertyCard> createState() => _PropertyCardState();
@@ -201,6 +173,10 @@ class _PropertyCardState extends State<PropertyCard> {
 
   @override
   Widget build(BuildContext context) {
+    // Logique de couleur : Bleu pour Louer, Rouge pour Vendre
+    final String status = widget.property['type'].toString().toUpperCase();
+    final Color statusColor = (status == 'À LOUER') ? Colors.blue : Colors.red;
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
@@ -220,70 +196,68 @@ class _PropertyCardState extends State<PropertyCard> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image avec tags et prix
             Stack(
               children: [
                 Container(
                   width: double.infinity,
                   height: 200,
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(12),
+                    ),
                     image: DecorationImage(
                       image: AssetImage(widget.property['image']),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                
-                // Tags en haut alignés
+                // Badges en haut à gauche
                 Positioned(
                   top: 12,
                   left: 12,
                   child: Row(
                     children: [
-                      // Tag type (À VENDRE/À LOUER)
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
-                          color: widget.property['type'] == 'À VENDRE' 
-                              ? Colors.green 
-                              : Colors.blue,
+                          color: statusColor,
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          widget.property['type'],
+                          status,
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 12,
+                            fontSize: 10,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      
-                      // Tag EN VEDETTE
-                      if (widget.property['isFeatured'] == true) ...[
-                        const SizedBox(width: 8),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: const Text(
-                            'EN VEDETTE',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      const SizedBox(width: 8),
+                      // EN VEDETTE - Permanent
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFD700),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: const Text(
+                          'EN VEDETTE',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
-                      ],
+                      ),
                     ],
                   ),
                 ),
-                
-                // Bouton favori en haut à droite
                 Positioned(
                   top: 12,
                   right: 12,
@@ -298,13 +272,11 @@ class _PropertyCardState extends State<PropertyCard> {
                       child: Icon(
                         _isFavorite ? Icons.favorite : Icons.favorite_border,
                         color: _isFavorite ? Colors.red : Colors.grey,
-                        size: 20,
+                        size: 18,
                       ),
                     ),
                   ),
                 ),
-                
-                // Prix en bas sur l'image
                 Positioned(
                   bottom: 12,
                   left: 12,
@@ -312,8 +284,9 @@ class _PropertyCardState extends State<PropertyCard> {
                     widget.property['price'],
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'Serif',
                       shadows: [
                         Shadow(
                           offset: Offset(0, 1),
@@ -326,58 +299,54 @@ class _PropertyCardState extends State<PropertyCard> {
                 ),
               ],
             ),
-            
-            // Contenu de la carte
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Titre
-                  Text(
-                    widget.property['title'],
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF0F172A),
-                      height: 1.2,
-                    ),
-                    maxLines: 2,
+                  CustomText(
+                    text: widget.property['title'],
+                    type: CustomTextType.subtitle,
+                    fontSize: 16,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 8),
-                  
-                  // Localisation
                   Row(
                     children: [
                       const Icon(
-                        Icons.location_on,
+                        Icons.location_on_outlined,
                         size: 16,
                         color: Colors.grey,
                       ),
                       const SizedBox(width: 4),
                       Expanded(
-                        child: Text(
-                          widget.property['location'],
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
+                        child: CustomText(
+                          text: widget.property['location'],
+                          type: CustomTextType.caption,
+                          fontSize: 13,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 12),
-                  
-                  // Détails (surface, pièces, salles de bain)
+                  const SizedBox(height: 16),
                   Row(
                     children: [
-                      _buildDetailItem(Icons.square_foot, widget.property['surface']),
+                      _buildDetailItem(
+                        Icons.crop_free,
+                        widget.property['surface'],
+                      ),
                       const SizedBox(width: 16),
-                      _buildDetailItem(Icons.bed, '${widget.property['rooms']} p.'),
+                      _buildDetailItem(
+                        Icons.bed_outlined,
+                        '${widget.property['rooms']} ch.',
+                      ),
                       const SizedBox(width: 16),
-                      _buildDetailItem(Icons.bathtub, '${widget.property['bathrooms']} s.d.'),
+                      _buildDetailItem(
+                        Icons.bathtub_outlined,
+                        '${widget.property['bathrooms']} sdb',
+                      ),
                     ],
                   ),
                 ],
@@ -392,18 +361,13 @@ class _PropertyCardState extends State<PropertyCard> {
   Widget _buildDetailItem(IconData icon, String text) {
     return Row(
       children: [
-        Icon(
-          icon,
-          size: 16,
-          color: Colors.grey[600],
-        ),
-        const SizedBox(width: 4),
-        Text(
-          text,
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 14,
-          ),
+        Icon(icon, size: 16, color: Colors.grey.shade500),
+        const SizedBox(width: 6),
+        CustomText(
+          text: text,
+          type: CustomTextType.caption,
+          fontSize: 13,
+          color: Colors.grey.shade600,
         ),
       ],
     );

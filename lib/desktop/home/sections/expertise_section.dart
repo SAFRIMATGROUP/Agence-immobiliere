@@ -74,36 +74,38 @@ class ExpertiseSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
+              Text(
                 "NOS EXPERTISES",
-                style: TextStyle(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.5,
+                style: const TextStyle(
                   fontSize: 14,
-                ),
-              ),
-              const SizedBox(height: 16),
-              const Text(
-                "Des Services Complets",
-                style: TextStyle(
-                  fontSize: 36,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF0F172A),
-                  fontFamily: 'Serif',
+                  color: Colors.black,
+                  height: 1.3,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                "Des Services Complets",
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  height: 1.3,
                 ),
               ),
               const SizedBox(height: 16),
-              const SizedBox(
+              SizedBox(
                 width: 600,
                 child: Text(
                   "Une gamme complète de services immobiliers pour répondre à tous vos besoins, de l'achat à la gestion de patrimoine.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
-                    color: Colors.grey,
-                    height: 1.6,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black87,
+                    height: 1.4,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               const SizedBox(height: 60),
@@ -202,14 +204,12 @@ class _ServiceCardState extends State<ServiceCard> {
             ),
             const SizedBox(height: 24),
             
-            // MODIFICATION : Le TITRE devient PRIMARY (Jaune) au survol
             Text(
               widget.title,
               style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: _isHovered ? AppColors.primary : const Color(0xFF0F172A),
-                fontFamily: 'Serif',
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: _isHovered ? Colors.black : const Color(0xFF0F172A),
               ),
             ),
             
@@ -218,8 +218,9 @@ class _ServiceCardState extends State<ServiceCard> {
               widget.description,
               style: const TextStyle(
                 fontSize: 14,
-                color: Colors.grey,
-                height: 1.6,
+                fontWeight: FontWeight.w400,
+                color: Colors.black54,
+                height: 1.5,
               ),
             ),
             const SizedBox(height: 24),
@@ -228,20 +229,16 @@ class _ServiceCardState extends State<ServiceCard> {
                 Text(
                   "En savoir plus",
                   style: TextStyle(
-                    color: _isHovered
-                        ? AppColors.primary
-                        : AppColors.secondary,
-                    fontWeight: FontWeight.w600,
                     fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: _isHovered ? Colors.black : AppColors.primary,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Icon(
                   Icons.arrow_forward,
                   size: 16,
-                  color: _isHovered
-                      ? AppColors.primary
-                      : AppColors.secondary,
+                  color: _isHovered ? Colors.black : AppColors.primary,
                 ),
               ],
             ),

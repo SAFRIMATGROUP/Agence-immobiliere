@@ -43,7 +43,7 @@ class WhyChooseUsSection extends StatelessWidget {
       width: double.infinity, // 100% de la largeur totale
       padding: const EdgeInsets.symmetric(vertical: 80),
       decoration: const BoxDecoration(
-        color: Color.fromARGB(255, 59, 83, 109), // Bleu Nuit très profond
+        color: Color(0xFF1A3263), 
       ),
       child: Column(
         children: [

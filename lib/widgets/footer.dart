@@ -34,33 +34,32 @@ class CustomFooter extends StatelessWidget {
                                   height: 40,
                                   decoration: const BoxDecoration(
                                     color: Color(0xFFFFD700), // Yellow
-                                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(4),
+                                    ),
                                   ),
-                                  child: Center(
+                                  child: const Center(
                                     child: CustomText(
                                       text: 'IM',
-                                      type: CustomTextType.button,
-                                      color: const Color(0xFF1A3263),
-                                      fontSize: 16,
+                                      type: CustomTextType.footerLogoText,
                                     ),
                                   ),
                                 ),
                                 const SizedBox(width: 8),
-                                CustomText(
+                                const CustomText(
                                   text: 'ImmoElite',
-                                  type: CustomTextType.textWhite,
-                                  fontSize: 20,
+                                  type: CustomTextType.footerBrandName,
                                 ),
                               ],
                             ),
                             const SizedBox(height: 20),
                             // Description
-                            SizedBox(
+                            const SizedBox(
                               width: 280,
                               child: CustomText(
-                                text: 'Votre partenaire de confiance pour tous vos projets immobiliers. Expertise, innovation et accompagnement personnalisé.',
-                                type: CustomTextType.textWhite,
-                                fontSize: 14,
+                                text:
+                                    'Votre partenaire de confiance pour tous vos projets immobiliers. Expertise, innovation et accompagnement personnalisé.',
+                                type: CustomTextType.footerDescription,
                               ),
                             ),
                             const SizedBox(height: 30),
@@ -80,16 +79,15 @@ class CustomFooter extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 60),
-                      
+
                       // Liens Rapides Column
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomText(
+                            const CustomText(
                               text: 'Liens Rapides',
-                              type: CustomTextType.textWhite,
-                              fontSize: 18,
+                              type: CustomTextType.footerColumnTitle,
                             ),
                             const SizedBox(height: 20),
                             _buildFooterLink('Accueil'),
@@ -102,16 +100,15 @@ class CustomFooter extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 60),
-                      
+
                       // Nos Services Column
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomText(
+                            const CustomText(
                               text: 'Nos Services',
-                              type: CustomTextType.textWhite,
-                              fontSize: 18,
+                              type: CustomTextType.footerColumnTitle,
                             ),
                             const SizedBox(height: 20),
                             _buildFooterLink('Vente & Location'),
@@ -124,16 +121,15 @@ class CustomFooter extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 60),
-                      
+
                       // Contact Column
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomText(
+                            const CustomText(
                               text: 'Contact',
-                              type: CustomTextType.textWhite,
-                              fontSize: 18,
+                              type: CustomTextType.footerColumnTitle,
                             ),
                             const SizedBox(height: 20),
                             _buildContactItem(
@@ -148,13 +144,16 @@ class CustomFooter extends StatelessWidget {
                             const SizedBox(height: 12),
                             _buildContactItem(
                               icon: Icons.location_on,
-                              text: '123 Avenue des Champs-Élysées\n75008 Paris, France',
+                              text:
+                                  '123 Avenue des Champs-Élysées\n75008 Paris, France',
                             ),
                             const SizedBox(height: 25),
                             // WhatsApp Button
                             Container(
                               decoration: BoxDecoration(
-                                color: const Color(0xFF25D366), // WhatsApp green
+                                color: const Color(
+                                  0xFF25D366,
+                                ), // WhatsApp green
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Material(
@@ -164,24 +163,23 @@ class CustomFooter extends StatelessWidget {
                                   onTap: () {
                                     // WhatsApp action
                                   },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
+                                  child: const Padding(
+                                    padding: EdgeInsets.symmetric(
                                       horizontal: 16,
                                       vertical: 10,
                                     ),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Icon(
+                                        Icon(
                                           Icons.message,
                                           color: Colors.white,
                                           size: 20,
                                         ),
-                                        const SizedBox(width: 8),
+                                        SizedBox(width: 8),
                                         CustomText(
                                           text: 'WhatsApp',
-                                          type: CustomTextType.textWhite,
-                                          fontSize: 14,
+                                          type: CustomTextType.footerLink,
                                         ),
                                       ],
                                     ),
@@ -199,14 +197,10 @@ class CustomFooter extends StatelessWidget {
               ),
             ),
           ),
-          
+
           // Ligne horizontale sur 100% de la largeur
-          Container(
-            width: double.infinity,
-            height: 1,
-            color: Colors.white24,
-          ),
-          
+          Container(width: double.infinity, height: 1, color: Colors.white24),
+
           // Copyright centré à 60%
           Center(
             child: Container(
@@ -215,10 +209,9 @@ class CustomFooter extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomText(
+                  const CustomText(
                     text: '© 2024 ImmoElite. Tous droits réservés.',
-                    type: CustomTextType.textWhite,
-                    fontSize: 12,
+                    type: CustomTextType.footerCopyright,
                   ),
                   Row(
                     children: [
@@ -228,10 +221,9 @@ class CustomFooter extends StatelessWidget {
                           onTap: () {
                             // Navigation vers mentions légales
                           },
-                          child: CustomText(
+                          child: const CustomText(
                             text: 'Mention légale',
-                            type: CustomTextType.textWhite,
-                            fontSize: 12,
+                            type: CustomTextType.footerCopyright,
                           ),
                         ),
                       ),
@@ -242,10 +234,9 @@ class CustomFooter extends StatelessWidget {
                           onTap: () {
                             // Navigation vers politique de confidentialité
                           },
-                          child: CustomText(
+                          child: const CustomText(
                             text: 'Politique de confidentialité',
-                            type: CustomTextType.textWhite,
-                            fontSize: 12,
+                            type: CustomTextType.footerCopyright,
                           ),
                         ),
                       ),
@@ -264,15 +255,11 @@ class CustomFooter extends StatelessWidget {
     return Container(
       width: 36,
       height: 36,
-      decoration: BoxDecoration(
-        color: const Color(0xFF0F2347), // Darker blue
+      decoration: const BoxDecoration(
+        color: Color(0xFF0F2347), // Darker blue
         shape: BoxShape.circle,
       ),
-      child: Icon(
-        icon,
-        color: Colors.white,
-        size: 18,
-      ),
+      child: Icon(icon, color: Colors.white, size: 18),
     );
   }
 
@@ -285,20 +272,13 @@ class CustomFooter extends StatelessWidget {
           onTap: () {
             // Navigation logic
           },
-          child: CustomText(
-            text: text,
-            type: CustomTextType.textWhite,
-            fontSize: 14,
-          ),
+          child: CustomText(text: text, type: CustomTextType.footerLink),
         ),
       ),
     );
   }
 
-  Widget _buildContactItem({
-    required IconData icon,
-    required String text,
-  }) {
+  Widget _buildContactItem({required IconData icon, required String text}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -309,11 +289,7 @@ class CustomFooter extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: CustomText(
-            text: text,
-            type: CustomTextType.textWhite,
-            fontSize: 14,
-          ),
+          child: CustomText(text: text, type: CustomTextType.footerLink),
         ),
       ],
     );

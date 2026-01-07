@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../constants/colors.app.dart';
+import '../../../widgets/custom_text.dart';
 
 class ExpertiseSection extends StatelessWidget {
   const ExpertiseSection({super.key});
@@ -43,8 +44,7 @@ class ExpertiseSection extends StatelessWidget {
     },
     {
       'title': 'Financement',
-      'desc':
-          'Solutions de financement adaptées et accompagnement bancaire.',
+      'desc': 'Solutions de financement adaptées et accompagnement bancaire.',
       'icon': Icons.account_balance_wallet_outlined,
     },
     {
@@ -64,7 +64,7 @@ class ExpertiseSection extends StatelessWidget {
   Widget build(BuildContext context) {
     // 1. Get screen size
     final size = MediaQuery.of(context).size;
-    
+
     // 2. Wrap everything in a Center -> SizedBox (60% width)
     return Center(
       child: SizedBox(
@@ -74,37 +74,23 @@ class ExpertiseSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                "NOS EXPERTISES",
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  height: 1.3,
-                ),
+              const CustomText(
+                text: "NOS EXPERTISES",
+                type: CustomTextType.expertiseTagline,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
-              Text(
-                "Des Services Complets",
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                  height: 1.3,
-                ),
+              const CustomText(
+                text: "Des Services Complets",
+                type: CustomTextType.expertiseTitle,
               ),
               const SizedBox(height: 16),
-              SizedBox(
+              const SizedBox(
                 width: 600,
-                child: Text(
-                  "Une gamme complète de services immobiliers pour répondre à tous vos besoins, de l'achat à la gestion de patrimoine.",
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black87,
-                    height: 1.4,
-                  ),
+                child: CustomText(
+                  text:
+                      "Une gamme complète de services immobiliers pour répondre à tous vos besoins, de l'achat à la gestion de patrimoine.",
+                  type: CustomTextType.expertiseDescription,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -203,36 +189,30 @@ class _ServiceCardState extends State<ServiceCard> {
               ),
             ),
             const SizedBox(height: 24),
-            
-            Text(
-              widget.title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: _isHovered ? Colors.black : const Color(0xFF0F172A),
-              ),
+
+            // CustomText handles the color change internally via type if we want robust logic,
+            // but for simple hover color changes, we might need a specific type that supports color override.
+            // However, CustomText supports 'color' property override.
+            CustomText(
+              text: widget.title,
+              type: CustomTextType.expertiseCardTitle,
+              color: _isHovered
+                  ? Colors.black
+                  : null, // Overriding color on hover
             ),
-            
+
             const SizedBox(height: 12),
-            Text(
-              widget.description,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.black54,
-                height: 1.5,
-              ),
+            CustomText(
+              text: widget.description,
+              type: CustomTextType.expertiseCardDescription,
             ),
             const SizedBox(height: 24),
             Row(
               children: [
-                Text(
-                  "En savoir plus",
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: _isHovered ? Colors.black : AppColors.primary,
-                  ),
+                CustomText(
+                  text: "En savoir plus",
+                  type: CustomTextType.expertiseCardLearnMore,
+                  color: _isHovered ? Colors.black : AppColors.primary,
                 ),
                 const SizedBox(width: 8),
                 Icon(

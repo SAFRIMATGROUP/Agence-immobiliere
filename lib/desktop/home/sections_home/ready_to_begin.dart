@@ -31,28 +31,29 @@ class ReadyToBeginSection extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 100),
         child: Center(
           child: SizedBox(
-            width: size.width * 0.6, 
+            width: size.width * 0.6,
             child: Column(
               children: [
-                CustomText(
+                const CustomText(
                   text: "Trouvez Votre Bien Immobilier Idéal",
-                  type: CustomTextType.hero,
+                  type: CustomTextType.readyToBeginTitle,
                   textAlign: TextAlign.center,
                 ),
-                
+
                 const SizedBox(height: 24),
-                
-                SizedBox(
+
+                const SizedBox(
                   width: 600,
                   child: CustomText(
-                    text: "Rejoignez des milliers de clients satisfaits qui ont fait confiance à notre expertise pour réaliser leur projet immobilier.",
-                    type: CustomTextType.textWhite,
+                    text:
+                        "Rejoignez des milliers de clients satisfaits qui ont fait confiance à notre expertise pour réaliser leur projet immobilier.",
+                    type: CustomTextType.readyToBeginDescription,
                     textAlign: TextAlign.center,
                   ),
                 ),
-                
+
                 const SizedBox(height: 60),
-                
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -61,35 +62,39 @@ class ReadyToBeginSection extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
                         foregroundColor: const Color(0xFF0A1929),
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 18),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 18,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                         elevation: 0,
                       ),
-                      child: CustomText(
+                      child: const CustomText(
                         text: "Voir Nos Biens",
-                        type: CustomTextType.buttonWhite,
-                        fontSize: 16,
+                        type: CustomTextType.readyToBeginButton,
                       ),
                     ),
-                    
+
                     const SizedBox(width: 20),
-                    
+
                     OutlinedButton(
                       onPressed: () {},
                       style: OutlinedButton.styleFrom(
                         foregroundColor: Colors.white,
                         side: const BorderSide(color: Colors.white, width: 2),
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 18),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 32,
+                          vertical: 18,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: CustomText(
+                      child: const CustomText(
                         text: "Nous Contacter",
-                        type: CustomTextType.buttonWhite,
-                        fontSize: 16,
+                        type: CustomTextType.readyToBeginButtonOutline,
                       ),
                     ),
                   ],

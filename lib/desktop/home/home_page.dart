@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import '../../constants/colors.app.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/navbar.dart';
-import 'sections/expertise_section.dart'; // Import de la section expertise
-import 'sections/property_and_star.dart'; // Import de la section propriétés
-import 'sections/why_choose_us.dart'; // Import de la section pourquoi nous choisir
-import 'sections/testimonials.dart'; // Import de la section témoignages
-import 'sections/ready_to_begin.dart'; // Import de la section ready to begin
+import 'sections_home/expertise_section.dart'; // Import de la section expertise
+import 'sections_home/property_and_star.dart'; // Import de la section propriétés
+import 'sections_home/why_choose_us.dart'; // Import de la section pourquoi nous choisir
+import 'sections_home/testimonials.dart'; // Import de la section témoignages
+import 'sections_home/ready_to_begin.dart'; // Import de la section ready to begin
 import '../../widgets/footer.dart'; // Import du footer
 
 class HomePage extends StatefulWidget {
@@ -203,45 +203,25 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
-                  'Agence immobilière de confiance depuis 2010',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
+                const CustomText(
+                  text: 'Agence immobilière de confiance depuis 2010',
+                  type: CustomTextType.homeHeroTagline,
                 ),
               ],
             ),
           ),
           const SizedBox(height: 30),
-          const Text(
-            'Trouvez le Bien\nde Vos Rêves',
+          const CustomText(
+            text: 'Trouvez le Bien\nde Vos Rêves',
+            type: CustomTextType.homeHeroTitle,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 56,
-              fontWeight: FontWeight.bold,
-              height: 1.2,
-              color: Colors.white,
-              shadows: [
-                Shadow(
-                  offset: Offset(0, 2),
-                  blurRadius: 4,
-                  color: Colors.black45,
-                ),
-              ],
-            ),
           ),
           const SizedBox(height: 20),
-          const Text(
-            'Expertise, innovation et accompagnement personnalisé pour tous vos projets immobiliers. Vente, location, investissement et gestion locative.',
+          const CustomText(
+            text:
+                'Expertise, innovation et accompagnement personnalisé pour tous vos projets immobiliers. Vente, location, investissement et gestion locative.',
+            type: CustomTextType.homeHeroDescription,
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w400,
-              color: Colors.white,
-              height: 1.5,
-            ),
           ),
           const SizedBox(height: 40),
           Row(
@@ -262,13 +242,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: const Row(
                   children: [
-                    Text(
-                      'Voir les Biens',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+                    CustomText(
+                      text: 'Voir les Biens',
+                      type: CustomTextType.homeHeroButton,
                     ),
                     SizedBox(width: 8),
                     Icon(Icons.arrow_forward, size: 18),
@@ -289,13 +265,9 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text(
-                  'Confier Mon Bien',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                child: const CustomText(
+                  text: 'Confier Mon Bien',
+                  type: CustomTextType.homeHeroButtonOutline,
                 ),
               ),
               const SizedBox(width: 20),
@@ -312,13 +284,9 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: const Text(
-                  'Investir',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                child: const CustomText(
+                  text: 'Investir',
+                  type: CustomTextType.homeHeroButtonOutline,
                 ),
               ),
             ],
@@ -386,7 +354,9 @@ class _HomePageState extends State<HomePage> {
                 focusNode: _cityFocusNode,
                 decoration: const InputDecoration(
                   hintText: 'Ville ou code postal',
-                  hintStyle: TextStyle(color: Colors.grey),
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                  ), // TextFormField hint keeps TextStyle
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 20,
@@ -416,12 +386,9 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Icon(Icons.search, size: 20),
                     SizedBox(width: 8),
-                    Text(
-                      'Rechercher',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
+                    CustomText(
+                      text: 'Rechercher',
+                      type: CustomTextType.searchButton,
                     ),
                   ],
                 ),
@@ -486,14 +453,11 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(6),
                             )
                           : null,
-                      child: Text(
-                        item,
-                        style: TextStyle(
-                          color: isSelected ? Colors.black : Colors.black87,
-                          fontWeight: isSelected
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                        ),
+                      child: CustomText(
+                        text: item,
+                        type: isSelected
+                            ? CustomTextType.searchDropdownSelected
+                            : CustomTextType.searchDropdownNormal,
                       ),
                     ),
                   ),
@@ -505,15 +469,11 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Text(
-                        value ?? hint,
-                        style: TextStyle(
-                          color: value == null
-                              ? Colors.grey[700]
-                              : Colors.black,
-                          fontSize: 16,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      child: CustomText(
+                        text: value ?? hint,
+                        type: CustomTextType.searchDropdownNormal,
+                        overflow: TextOverflow.ellipsis,
+                        // Override color for hint if needed, handled by default style or dedicated type
                       ),
                     ),
                     Icon(
@@ -548,25 +508,9 @@ class _HomePageState extends State<HomePage> {
   Widget _buildStatItem(String number, String label) {
     return Column(
       children: [
-        Text(
-          number,
-          style: const TextStyle(
-            fontSize: 48,
-            fontWeight: FontWeight.bold,
-            color: AppColors.primary,
-            height: 1.0,
-          ),
-        ),
+        CustomText(text: number, type: CustomTextType.homeStatNumber),
         const SizedBox(height: 8),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.white70,
-            height: 1.4,
-          ),
-        ),
+        CustomText(text: label, type: CustomTextType.homeStatLabel),
       ],
     );
   }

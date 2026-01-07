@@ -226,13 +226,9 @@ class _PropertyCardState extends State<PropertyCard> {
                           color: statusColor,
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: Text(
-                          status,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: CustomText(
+                          text: status,
+                          type: CustomTextType.propertyStatusBadge,
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -246,13 +242,9 @@ class _PropertyCardState extends State<PropertyCard> {
                           color: const Color(0xFFFFD700),
                           borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Text(
-                          'EN VEDETTE',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: const CustomText(
+                          text: 'EN VEDETTE',
+                          type: CustomTextType.propertyFeaturedBadge,
                         ),
                       ),
                     ],
@@ -280,21 +272,9 @@ class _PropertyCardState extends State<PropertyCard> {
                 Positioned(
                   bottom: 12,
                   left: 12,
-                  child: Text(
-                    widget.property['price'],
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Serif',
-                      shadows: [
-                        Shadow(
-                          offset: Offset(0, 1),
-                          blurRadius: 2,
-                          color: Colors.black,
-                        ),
-                      ],
-                    ),
+                  child: CustomText(
+                    text: widget.property['price'],
+                    type: CustomTextType.propertyPriceOverlay,
                   ),
                 ),
               ],

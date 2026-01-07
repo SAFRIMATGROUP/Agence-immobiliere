@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/colors.app.dart';
+import '../../constants/typography.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/footer.dart';
 import '../../widgets/navbar.dart';
@@ -38,7 +39,6 @@ class _RealEstatePageState extends State<RealEstatePage> {
 
   String _selectedTransaction = 'Toutes';
   String _selectedType = 'Tous les types';
-  String _selectedStatus = 'Tous';
   bool _showFilters = false;
   double _minPrice = 0;
   double _minSurface = 0;
@@ -178,7 +178,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
       'title': 'Viva Hotel & Spa',
       'location': 'Ouagadougou - Centre',
       'price': '2 500 000 000 FCFA',
-      'image': 'assets/images/imagesWeb/viva_hotel.png',
+      'image': 'assets/images/imagesWeb/hotel_ricardio.png',
       'type': 'Local commercial',
       'status': 'À VENDRE',
       'featured': true,
@@ -225,10 +225,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
             AppColors.secondary,
             Colors.white, // Blanc pur en bas
           ],
-          stops: [
-            0.3,
-            1.0,
-          ], // Le bleu reste un peu avant de fondre vers le blanc
+          stops: [0.3, 1.0],
         ),
       ),
       child: Column(
@@ -236,8 +233,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
         children: [
           const CustomText(
             text: 'Nos Biens Immobiliers',
-            type: CustomTextType.hero,
-            fontSize: 48,
+            type: CustomTextType.realEstateHeroTitle,
           ),
           const SizedBox(height: 16),
           const SizedBox(
@@ -245,9 +241,8 @@ class _RealEstatePageState extends State<RealEstatePage> {
             child: CustomText(
               text:
                   'Découvrez notre sélection exclusive de biens immobiliers à vendre et à louer dans les meilleures villes de France.',
-              type: CustomTextType.bodyWhite,
+              type: CustomTextType.realEstateHeroBody,
               textAlign: TextAlign.center,
-              fontSize: 18,
             ),
           ),
         ],
@@ -261,9 +256,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
     return Center(
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
-        margin: const EdgeInsets.only(
-          top: 40,
-        ), // Marge pour descendre le filtre
+        margin: const EdgeInsets.only(top: 40),
         width: size.width * 0.7,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
@@ -325,13 +318,10 @@ class _RealEstatePageState extends State<RealEstatePage> {
                       Icons.tune,
                       color: _showFilters ? Colors.black : Colors.grey.shade700,
                     ),
-                    label: Text(
-                      "Filtres",
-                      style: TextStyle(
-                        color: _showFilters
-                            ? Colors.black
-                            : Colors.grey.shade700,
-                      ),
+                    label: CustomText(
+                      text: "Filtres",
+                      type: CustomTextType.filterButtonText,
+                      color: _showFilters ? Colors.black : Colors.grey.shade700,
                     ),
                   ),
                 ),
@@ -345,7 +335,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
                 children: [
                   Expanded(
                     child: _buildSliderFilter(
-                      "Budget", // Or "Prix"
+                      "Budget",
                       _minPrice,
                       0,
                       2000000,
@@ -387,16 +377,10 @@ class _RealEstatePageState extends State<RealEstatePage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-            Text(
-              formatValue(value),
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            CustomText(text: label, type: CustomTextType.filterLabel),
+            CustomText(
+              text: formatValue(value),
+              type: CustomTextType.filterValue,
             ),
           ],
         ),
@@ -430,7 +414,8 @@ class _RealEstatePageState extends State<RealEstatePage> {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Rechercher par ville...',
-          hintStyle: TextStyle(color: Colors.grey.shade500),
+          // Using raw TextStyle from AppTypography because InputDecoration expects TextStyle
+          hintStyle: AppTypography.searchHint,
           prefixIcon: Icon(Icons.search, color: Colors.grey.shade500),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
@@ -495,14 +480,11 @@ class _RealEstatePageState extends State<RealEstatePage> {
                               borderRadius: BorderRadius.circular(6),
                             )
                           : null,
-                      child: Text(
-                        item,
-                        style: TextStyle(
-                          color: isSelected ? Colors.black : Colors.black87,
-                          fontWeight: isSelected
-                              ? FontWeight.bold
-                              : FontWeight.normal,
-                        ),
+                      child: CustomText(
+                        text: item,
+                        type: isSelected
+                            ? CustomTextType.dropdownSelected
+                            : CustomTextType.dropdownItem,
                       ),
                     ),
                   ),
@@ -514,13 +496,10 @@ class _RealEstatePageState extends State<RealEstatePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: Text(
-                        value,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      child: CustomText(
+                        text: value,
+                        type: CustomTextType.dropdownValue,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Icon(
@@ -555,10 +534,8 @@ class _RealEstatePageState extends State<RealEstatePage> {
                 children: [
                   CustomText(
                     text: '${_properties.length} biens trouvés',
-                    type: CustomTextType.body,
-                    fontSize: 16,
+                    type: CustomTextType.resultsCount,
                   ),
-                  /* Sort options removed */
                 ],
               ),
               const SizedBox(height: 32),
@@ -676,13 +653,9 @@ class _PropertyCardState extends State<PropertyCard> {
                             color: statusColor,
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Text(
-                            status,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: CustomText(
+                            text: status,
+                            type: CustomTextType.cardStatusText,
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -696,13 +669,9 @@ class _PropertyCardState extends State<PropertyCard> {
                             color: const Color(0xFFFFD700),
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: const Text(
-                            'EN VEDETTE',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: const CustomText(
+                            text: 'EN VEDETTE',
+                            type: CustomTextType.cardFeaturedText,
                           ),
                         ),
                       ],
@@ -730,21 +699,9 @@ class _PropertyCardState extends State<PropertyCard> {
                   Positioned(
                     bottom: 12,
                     left: 12,
-                    child: Text(
-                      widget.property['price'],
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Serif',
-                        shadows: [
-                          Shadow(
-                            offset: Offset(0, 1),
-                            blurRadius: 2,
-                            color: Colors.black,
-                          ),
-                        ],
-                      ),
+                    child: CustomText(
+                      text: widget.property['price'],
+                      type: CustomTextType.cardPrice,
                     ),
                   ),
                 ],
@@ -816,8 +773,8 @@ class _PropertyCardState extends State<PropertyCard> {
         const SizedBox(width: 6),
         CustomText(
           text: text,
-          type: CustomTextType.caption,
-          fontSize: 13,
+          type:
+              CustomTextType.captionBlack, // Or caption with override if needed
           color: Colors.grey.shade600,
         ),
       ],

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../constants/colors.app.dart';
 import '../../widgets/footer.dart';
+import '../../widgets/navbar.dart';
+import '../../widgets/custom_text.dart';
 
 class DetailsRealEstatePage extends StatefulWidget {
   final Map<String, dynamic> property;
@@ -14,6 +16,23 @@ class DetailsRealEstatePage extends StatefulWidget {
 
 class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
   final ScrollController _scrollController = ScrollController();
+  late String _selectedImage;
+  bool _isNavbarVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedImage = widget.property['image'];
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_scrollController.offset > 50 && !_isNavbarVisible) {
+      setState(() => _isNavbarVisible = true);
+    } else if (_scrollController.offset <= 50 && _isNavbarVisible) {
+      setState(() => _isNavbarVisible = false);
+    }
+  }
 
   @override
   void dispose() {
@@ -27,56 +46,68 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            // Marge pour la navbar
-            SizedBox(height: 40),
-            Center(
-              child: SizedBox(
-                width: size.width * 0.8,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildBreadcrumbs(),
-                    const SizedBox(height: 20),
-                    Row(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                const SizedBox(height: 40),
+                Center(
+                  child: SizedBox(
+                    width: size.width * 0.8,
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Colonne Gauche: Galerie (65%)
-                        Expanded(
-                          flex: 65,
-                          child: Column(
-                            children: [
-                              _buildMainImage(),
-                              const SizedBox(height: 16),
-                              _buildThumbnailGallery(),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 40),
-                        // Colonne Droite: Infos (35%)
-                        Expanded(
-                          flex: 35,
-                          child: Column(
-                            children: [
-                              _buildPriceCard(),
-                              const SizedBox(height: 24),
-                              _buildContactForm(),
-                            ],
-                          ),
+                        _buildBreadcrumbs(),
+                        const SizedBox(height: 20),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 65,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildMainImage(),
+                                  const SizedBox(height: 16),
+                                  _buildThumbnailGallery(),
+                                  const SizedBox(height: 40),
+                                  _buildDescriptionSection(),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 40),
+                            Expanded(
+                              flex: 35,
+                              child: Column(
+                                children: [
+                                  _buildPriceCard(),
+                                  const SizedBox(height: 24),
+                                  _buildContactForm(),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                const SizedBox(height: 80),
+                const CustomFooter(),
+              ],
             ),
-            const SizedBox(height: 80),
-            const CustomFooter(),
-          ],
-        ),
+          ),
+
+          if (_isNavbarVisible)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: const Navbar(currentPage: 'real-estate', isScrolled: true),
+            ),
+        ],
       ),
     );
   }
@@ -85,11 +116,9 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Left Column: Logo, Breadcrumbs, Back Button
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Logo
             Row(
               children: [
                 Container(
@@ -101,61 +130,58 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
                     color: AppColors.primary,
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  child: const Text(
-                    'IM',
-                    style: TextStyle(
-                      color: AppColors.background,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                  child: const CustomText(
+                    text: 'IM',
+                    type: CustomTextType.navTextBold, // Bold type
+                    color: AppColors.background,
+                    fontSize: 16,
                   ),
                 ),
                 const SizedBox(width: 8),
-                const Text(
-                  'ImmoElite',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                const CustomText(
+                  text: 'ImmoElite',
+                  type: CustomTextType.navTextBold, // Bold type
+                  color: Colors.black,
+                  fontSize: 16,
                 ),
               ],
             ),
             const SizedBox(height: 16),
 
-            // 2. Breadcrumbs
             Row(
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pushNamed(context, '/home'),
-                  child: const Text(
-                    "Accueil",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      decoration: TextDecoration.underline,
-                    ),
+                  child: const CustomText(
+                    text: "Accueil",
+                    type: CustomTextType.navTextBlack,
+                    color: Colors.grey,
                   ),
                 ),
-                const Text(" / ", style: TextStyle(color: Colors.grey)),
+                const CustomText(
+                  text: " / ",
+                  type: CustomTextType.body,
+                  color: Colors.grey,
+                ),
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: const Text(
-                    "Biens",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      decoration: TextDecoration.underline,
-                    ),
+                  child: const CustomText(
+                    text: "Biens",
+                    type: CustomTextType.navTextBlack,
+                    color: Colors.grey,
                   ),
                 ),
-                const Text(" / ", style: TextStyle(color: Colors.grey)),
+                const CustomText(
+                  text: " / ",
+                  type: CustomTextType.body,
+                  color: Colors.grey,
+                ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 400),
-                  child: Text(
-                    widget.property['title'],
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: CustomText(
+                    text: widget.property['title'],
+                    type: CustomTextType.navTextBold, // Bold type
+                    color: Colors.black,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -163,7 +189,6 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
             ),
             const SizedBox(height: 16),
 
-            // 3. Back Button
             TextButton.icon(
               onPressed: () => Navigator.pop(context),
               style: TextButton.styleFrom(
@@ -181,12 +206,10 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
                 size: 14,
                 color: Colors.black,
               ),
-              label: const Text(
-                "Retour aux biens",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                ),
+              label: const CustomText(
+                text: "Retour aux biens",
+                type: CustomTextType.button,
+                color: Colors.black,
               ),
             ),
           ],
@@ -194,7 +217,6 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
 
         const Spacer(),
 
-        // Right Side: "Voir les biens" Button
         ElevatedButton(
           onPressed: () => Navigator.pop(context),
           style: ElevatedButton.styleFrom(
@@ -205,9 +227,9 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          child: const Text(
-            "Voir les biens",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          child: const CustomText(
+            text: "Voir les biens",
+            type: CustomTextType.button,
           ),
         ),
       ],
@@ -223,7 +245,7 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             image: DecorationImage(
-              image: AssetImage(widget.property['image']),
+              image: AssetImage(_selectedImage),
               fit: BoxFit.cover,
             ),
           ),
@@ -237,9 +259,10 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
               color: AppColors.primary,
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Text(
-              widget.property['status'],
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+            child: CustomText(
+              text: widget.property['status'],
+              type: CustomTextType.navTextBold,
+              fontSize: 14,
             ),
           ),
         ),
@@ -270,29 +293,38 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
   }
 
   Widget _buildThumbnailGallery() {
-    // Placeholder thumbnails using the same image or other assets if available
-    // In a real app, 'property' would have a list of images.
     final List<String> images = [
       widget.property['image'],
       'assets/images/imagesWeb/residence_alice.png',
       'assets/images/imagesWeb/hotel_ricardio.png',
-      'assets/images/imagesWeb/villa.png',
+      'assets/images/imagesWeb/mini_villa.png',
     ];
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: images.map((img) {
+        final isSelected = _selectedImage == img;
         return Expanded(
-          child: Container(
-            height: 100,
-            margin: const EdgeInsets.only(right: 12),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: AppColors.primary,
-                width: 2,
-              ), // Yellow border for "selected" look on one?
-              image: DecorationImage(image: AssetImage(img), fit: BoxFit.cover),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                _selectedImage = img;
+              });
+            },
+            child: Container(
+              height: 100,
+              margin: const EdgeInsets.only(right: 12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: isSelected ? AppColors.primary : Colors.transparent,
+                  width: 2,
+                ),
+                image: DecorationImage(
+                  image: AssetImage(img),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
         );
@@ -317,30 +349,26 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Prix",
-            style: TextStyle(color: Colors.grey, fontSize: 16),
+          const CustomText(
+            text: "Prix",
+            type: CustomTextType.caption,
+            color: Colors.grey,
+            fontSize: 16,
           ),
           const SizedBox(height: 8),
-          Text(
-            widget.property['price'],
-            style: const TextStyle(
-              color: /*AppColors.primary*/ Color(
-                0xFFD4A017,
-              ), // Goldish color as per design? Or primary
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Playfair Display', // If available, or serif
-            ),
+          CustomText(
+            text: widget.property['price'],
+            type: CustomTextType.priceText, // Centralized Price Style
           ),
           const SizedBox(height: 16),
           const Row(
             children: [
               Icon(Icons.calendar_today, size: 16, color: Colors.grey),
               SizedBox(width: 8),
-              Text(
-                "Publié le 06/01/2026",
-                style: TextStyle(color: Colors.grey),
+              CustomText(
+                text: "Publié le 06/01/2026",
+                type: CustomTextType.caption,
+                color: Colors.grey,
               ),
             ],
           ),
@@ -396,17 +424,154 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
             children: [
               Icon(icon, color: text, size: 20),
               const SizedBox(width: 10),
-              Text(
-                label,
-                style: TextStyle(
-                  color: text,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
+              CustomText(
+                text: label,
+                type: CustomTextType.button,
+                color: text,
+                fontSize: 16,
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDescriptionSection() {
+    return Container(
+      padding: const EdgeInsets.all(32),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CustomText(
+            text: "Villa contemporaine avec piscine",
+            type: CustomTextType.serifTitle, // Centralized Serif Title
+          ),
+          const SizedBox(height: 8),
+          const Row(
+            children: [
+              Icon(
+                Icons.location_on_outlined,
+                color: AppColors.primary,
+                size: 20,
+              ),
+              SizedBox(width: 8),
+              CustomText(
+                text: "Quartier La Californie, 06400 Cannes",
+                type: CustomTextType.body,
+                color: Colors.grey,
+                fontSize: 16,
+              ),
+            ],
+          ),
+          const SizedBox(height: 32),
+
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 32),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF9FAFB),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildStatItem(Icons.crop_free, "280 m²", "Surface"),
+                _buildStatItem(Icons.door_sliding_outlined, "8", "Pièces"),
+                _buildStatItem(Icons.bed_outlined, "5", "Chambres"),
+                _buildStatItem(Icons.bathtub_outlined, "3", "SdB"),
+              ],
+            ),
+          ),
+          const SizedBox(height: 40),
+
+          const CustomText(
+            text: "Description",
+            type: CustomTextType.serifSection, // Centralized Serif Section
+          ),
+          const SizedBox(height: 16),
+          CustomText(
+            text:
+                "Exceptionnelle villa contemporaine située dans un quartier résidentiel prisé de Cannes. Cette propriété d'exception offre des prestations haut de gamme et une vue imprenable sur la mer.\n\n"
+                "Au rez-de-chaussée, vous découvrirez un vaste salon lumineux avec cheminée, une cuisine équipée ouvrant sur la terrasse, ainsi qu'une suite parentale avec dressing et salle de bains privative.\n\n"
+                "L'étage accueille 4 chambres spacieuses, toutes avec salle de bains attenante, offrant un confort optimal pour toute la famille.\n\n"
+                "À l'extérieur, profitez d'un jardin paysager de 800m², d'une piscine à débordement chauffée, d'un pool house et d'un garage double.",
+            type: CustomTextType.description,
+            color: Colors.grey.shade700,
+            fontSize: 16,
+          ),
+          const SizedBox(height: 40),
+
+          const CustomText(
+            text: "Caractéristiques",
+            type: CustomTextType.serifSection, // Centralized Serif Section
+          ),
+          const SizedBox(height: 24),
+          Wrap(
+            spacing: 40,
+            runSpacing: 16,
+            children: [
+              _buildFeatureItem("Piscine chauffée"),
+              _buildFeatureItem("Vue mer"),
+              _buildFeatureItem("Jardin paysager"),
+              _buildFeatureItem("Garage double"),
+              _buildFeatureItem("Climatisation"),
+              _buildFeatureItem("Domotique"),
+              _buildFeatureItem("Alarme"),
+              _buildFeatureItem("Cuisine équipée"),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatItem(IconData icon, String value, String label) {
+    return Column(
+      children: [
+        Icon(icon, color: const Color(0xFFD4A017), size: 28),
+        const SizedBox(height: 8),
+        CustomText(
+          text: value,
+          type: CustomTextType.statsNumberBlack,
+          fontSize: 18,
+          color: const Color(0xFF0C1D36),
+        ),
+        const SizedBox(height: 4),
+        CustomText(
+          text: label,
+          type: CustomTextType.statsLabelBlack,
+          color: Colors.grey,
+          fontSize: 14,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFeatureItem(String label) {
+    return SizedBox(
+      width: 200,
+      child: Row(
+        children: [
+          const Icon(Icons.check, color: Color(0xFFD4A017), size: 20),
+          const SizedBox(width: 12),
+          CustomText(
+            text: label,
+            type: CustomTextType.body,
+            color: const Color(0xFF0C1D36),
+            fontSize: 16,
+          ),
+        ],
       ),
     );
   }
@@ -428,13 +593,9 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Demande de visite",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'serif',
-            ),
+          const CustomText(
+            text: "Demande de visite",
+            type: CustomTextType.serifSubtitle, // Centralized Serif Subtitle
           ),
           const SizedBox(height: 20),
           Row(
@@ -467,7 +628,10 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text("Envoyer"),
+              child: const CustomText(
+                text: "Envoyer",
+                type: CustomTextType.button,
+              ),
             ),
           ),
         ],
@@ -479,7 +643,15 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
+        CustomText(
+          text: label,
+          type: CustomTextType.caption,
+          // FontWeight handled by caption or context if stricter rules needed,
+          // here using default caption style or similar.
+          // Note: Previous iteration used FontWeight.w500 override.
+          // If strictly no overrides, relying on type.
+          // Assuming caption supports w500 or is close enough.
+        ),
         const SizedBox(height: 8),
         TextField(
           maxLines: maxLines,

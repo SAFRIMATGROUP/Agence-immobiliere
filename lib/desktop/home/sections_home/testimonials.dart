@@ -17,25 +17,29 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
 
   static final List<Map<String, dynamic>> _testimonials = [
     {
-      'content': "Vente conclue en moins de 2 mois au prix souhaité ! Leur stratégie marketing et leur réseau ont fait toute la différence.",
+      'content':
+          "Vente conclue en moins de 2 mois au prix souhaité ! Leur stratégie marketing et leur réseau ont fait toute la différence.",
       'name': 'Thomas Moreau',
       'role': 'Vendeur',
       'avatar': 'assets/images/avatar1.jpg',
     },
     {
-      'content': "Une équipe à l'écoute et très réactive. Ils ont su trouver la perle rare que nous cherchions depuis des mois.",
+      'content':
+          "Une équipe à l'écoute et très réactive. Ils ont su trouver la perle rare que nous cherchions depuis des mois.",
       'name': 'Sarah & Marc',
       'role': 'Acheteurs',
       'avatar': 'assets/images/avatar2.jpg',
     },
     {
-      'content': "Gestion locative impeccable. Je reçois mes loyers à temps et je ne m'occupe de rien. La tranquillité d'esprit absolue.",
+      'content':
+          "Gestion locative impeccable. Je reçois mes loyers à temps et je ne m'occupe de rien. La tranquillité d'esprit absolue.",
       'name': 'Julien Lepers',
       'role': 'Investisseur',
       'avatar': 'assets/images/avatar3.jpg',
     },
     {
-      'content': "J'étais perdu dans les démarches administratives, mais l'équipe m'a guidé pas à pas. Un professionnalisme rare.",
+      'content':
+          "J'étais perdu dans les démarches administratives, mais l'équipe m'a guidé pas à pas. Un professionnalisme rare.",
       'name': 'Sophie Laurent',
       'role': 'Primo-accédante',
       'avatar': 'assets/images/avatar4.jpg',
@@ -82,16 +86,14 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
             children: [
               const CustomText(
                 text: "TÉMOIGNAGES",
-                type: CustomTextType.button,
-                fontSize: 12,
+                type: CustomTextType.testimonialTagline,
               ),
               const SizedBox(height: 16),
               const CustomText(
                 text: "Ce Que Disent Nos Clients",
-                type: CustomTextType.sectionBlack,
-                fontSize: 40,
+                type: CustomTextType.testimonialTitle,
               ),
-              
+
               const SizedBox(height: 60),
 
               Row(
@@ -114,15 +116,19 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                         controller: _pageController,
                         clipBehavior: Clip.none,
                         onPageChanged: (index) {
-                          setState(() => _realIndex = index % _testimonials.length);
+                          setState(
+                            () => _realIndex = index % _testimonials.length,
+                          );
                         },
-                        
+
                         itemBuilder: (context, index) {
                           final testimonialIndex = index % _testimonials.length;
-                          
+
                           return Padding(
                             padding: const EdgeInsets.fromLTRB(20, 50, 20, 30),
-                            child: _TestimonialCard(data: _testimonials[testimonialIndex]),
+                            child: _TestimonialCard(
+                              data: _testimonials[testimonialIndex],
+                            ),
                           );
                         },
                       ),
@@ -153,8 +159,8 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                     height: 8,
                     width: _realIndex == index ? 24 : 8,
                     decoration: BoxDecoration(
-                      color: _realIndex == index 
-                          ? AppColors.primary 
+                      color: _realIndex == index
+                          ? AppColors.primary
                           : Colors.grey.shade300,
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -168,7 +174,10 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
     );
   }
 
-  Widget _buildArrowButton({required IconData icon, required VoidCallback onTap}) {
+  Widget _buildArrowButton({
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
     return Container(
       width: 40,
       height: 40,
@@ -223,13 +232,19 @@ class _TestimonialCard extends StatelessWidget {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(5, (index) => const Icon(Icons.star, color: AppColors.primary, size: 20)),
+                children: List.generate(
+                  5,
+                  (index) => const Icon(
+                    Icons.star,
+                    color: AppColors.primary,
+                    size: 20,
+                  ),
+                ),
               ),
               const SizedBox(height: 24),
               CustomText(
                 text: "\"${data['content']}\"",
-                type: CustomTextType.body,
-                fontSize: 18,
+                type: CustomTextType.testimonialQuote,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
@@ -243,7 +258,11 @@ class _TestimonialCard extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: Colors.grey.shade200,
                     ),
-                    child: const Icon(Icons.person, color: Colors.grey, size: 30),
+                    child: const Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                      size: 30,
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Column(
@@ -251,13 +270,11 @@ class _TestimonialCard extends StatelessWidget {
                     children: [
                       CustomText(
                         text: data['name'],
-                        type: CustomTextType.subtitle,
-                        fontSize: 16,
+                        type: CustomTextType.testimonialName,
                       ),
                       CustomText(
                         text: data['role'],
-                        type: CustomTextType.caption,
-                        fontSize: 14,
+                        type: CustomTextType.testimonialRole,
                       ),
                     ],
                   ),

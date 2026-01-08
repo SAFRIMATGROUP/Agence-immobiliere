@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../constants/colors.app.dart';
+import '../../constants/colors.dart';
 import '../../constants/typography.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/footer.dart';
@@ -211,20 +211,12 @@ class _RealEstatePageState extends State<RealEstatePage> {
   Widget _buildHeader() {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.only(
-        left: 40,
-        right: 40,
-        top: 120, // Augmenté pour compenser la navbar transparente
-        bottom: 80,
-      ),
+      padding: const EdgeInsets.only(left: 40, right: 40, top: 120, bottom: 80),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [
-            AppColors.secondary,
-            Colors.white, // Blanc pur en bas
-          ],
+          colors: [AppColors.secondary, Colors.white],
           stops: [0.3, 1.0],
         ),
       ),
@@ -233,7 +225,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
         children: [
           const CustomText(
             text: 'Nos Biens Immobiliers',
-            type: CustomTextType.realEstateHeroTitle,
+            type: CustomTextType.heroTitle,
           ),
           const SizedBox(height: 16),
           const SizedBox(
@@ -241,7 +233,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
             child: CustomText(
               text:
                   'Découvrez notre sélection exclusive de biens immobiliers à vendre et à louer dans les meilleures villes de France.',
-              type: CustomTextType.realEstateHeroBody,
+              type: CustomTextType.sectionDescription,
               textAlign: TextAlign.center,
             ),
           ),
@@ -320,7 +312,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
                     ),
                     label: CustomText(
                       text: "Filtres",
-                      type: CustomTextType.filterButtonText,
+                      type: CustomTextType.button,
                       color: _showFilters ? Colors.black : Colors.grey.shade700,
                     ),
                   ),
@@ -377,10 +369,15 @@ class _RealEstatePageState extends State<RealEstatePage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CustomText(text: label, type: CustomTextType.filterLabel),
+            CustomText(
+              text: label,
+              type: CustomTextType.label,
+              color: Colors.black,
+            ),
             CustomText(
               text: formatValue(value),
-              type: CustomTextType.filterValue,
+              type: CustomTextType.label,
+              color: AppColors.primary,
             ),
           ],
         ),
@@ -415,7 +412,9 @@ class _RealEstatePageState extends State<RealEstatePage> {
         decoration: InputDecoration(
           hintText: 'Rechercher par ville...',
           // Using raw TextStyle from AppTypography because InputDecoration expects TextStyle
-          hintStyle: AppTypography.searchHint,
+          hintStyle: AppTypography.sectionDescription.copyWith(
+            color: Colors.grey,
+          ),
           prefixIcon: Icon(Icons.search, color: Colors.grey.shade500),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
@@ -483,8 +482,8 @@ class _RealEstatePageState extends State<RealEstatePage> {
                       child: CustomText(
                         text: item,
                         type: isSelected
-                            ? CustomTextType.dropdownSelected
-                            : CustomTextType.dropdownItem,
+                            ? CustomTextType.label
+                            : CustomTextType.label,
                       ),
                     ),
                   ),
@@ -498,7 +497,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
                     Expanded(
                       child: CustomText(
                         text: value,
-                        type: CustomTextType.dropdownValue,
+                        type: CustomTextType.label,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -534,7 +533,8 @@ class _RealEstatePageState extends State<RealEstatePage> {
                 children: [
                   CustomText(
                     text: '${_properties.length} biens trouvés',
-                    type: CustomTextType.resultsCount,
+                    type: CustomTextType.label,
+                    fontSize: 16,
                   ),
                 ],
               ),
@@ -643,7 +643,6 @@ class _PropertyCardState extends State<PropertyCard> {
                     left: 12,
                     child: Row(
                       children: [
-                        // Statut dynamique (Bleu pour louer, rouge sinon)
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8,
@@ -655,11 +654,12 @@ class _PropertyCardState extends State<PropertyCard> {
                           ),
                           child: CustomText(
                             text: status,
-                            type: CustomTextType.cardStatusText,
+                            type: CustomTextType.label,
+                            color: Colors.white,
+                            fontSize: 12,
                           ),
                         ),
                         const SizedBox(width: 8),
-                        // EN VEDETTE - Toujours présent comme demandé
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8,
@@ -671,7 +671,9 @@ class _PropertyCardState extends State<PropertyCard> {
                           ),
                           child: const CustomText(
                             text: 'EN VEDETTE',
-                            type: CustomTextType.cardFeaturedText,
+                            type: CustomTextType.label,
+                            color: Colors.black,
+                            fontSize: 12,
                           ),
                         ),
                       ],
@@ -701,7 +703,9 @@ class _PropertyCardState extends State<PropertyCard> {
                     left: 12,
                     child: CustomText(
                       text: widget.property['price'],
-                      type: CustomTextType.cardPrice,
+                      type: CustomTextType.cardTitle,
+                      color: Colors.white,
+                      fontSize: 18,
                     ),
                   ),
                 ],
@@ -713,7 +717,7 @@ class _PropertyCardState extends State<PropertyCard> {
                   children: [
                     CustomText(
                       text: widget.property['title'],
-                      type: CustomTextType.subtitle,
+                      type: CustomTextType.cardTitle,
                       fontSize: 16,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -730,7 +734,7 @@ class _PropertyCardState extends State<PropertyCard> {
                         Expanded(
                           child: CustomText(
                             text: widget.property['location'],
-                            type: CustomTextType.caption,
+                            type: CustomTextType.sectionDescriptionBlack,
                             fontSize: 13,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -761,9 +765,9 @@ class _PropertyCardState extends State<PropertyCard> {
               ),
             ],
           ),
-        ), // Container
-      ), // GestureDetector
-    ); // MouseRegion
+        ),
+      ),
+    );
   }
 
   Widget _buildDetailItem(IconData icon, String text) {
@@ -773,8 +777,8 @@ class _PropertyCardState extends State<PropertyCard> {
         const SizedBox(width: 6),
         CustomText(
           text: text,
-          type:
-              CustomTextType.captionBlack, // Or caption with override if needed
+          type: CustomTextType
+              .sectionDescription, // Or caption with override if needed
           color: Colors.grey.shade600,
         ),
       ],

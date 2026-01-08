@@ -3,21 +3,19 @@ import '../../constants/colors.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/footer.dart';
 import '../../widgets/navbar.dart';
+import 'sections_invest/our_solutions.dart';
+import 'sections_invest/simulator.dart';
+import 'sections_invest/why_invest_with_us.dart';
+import 'sections_invest/ready_to_invest.dart';
 
-import 'sections_rental_property/our_services.dart';
-import 'sections_rental_property/our_process.dart';
-import 'sections_rental_property/your_advantage.dart';
-import 'sections_rental_property/ready_to_delegate.dart';
-
-class RentalManagementPage extends StatefulWidget {
-  const RentalManagementPage({super.key});
-  // ...
+class InvestPage extends StatefulWidget {
+  const InvestPage({super.key});
 
   @override
-  State<RentalManagementPage> createState() => _RentalManagementPageState();
+  State<InvestPage> createState() => _InvestPageState();
 }
 
-class _RentalManagementPageState extends State<RentalManagementPage> {
+class _InvestPageState extends State<InvestPage> {
   final ScrollController _scrollController = ScrollController();
   bool _isScrolled = false;
 
@@ -46,16 +44,16 @@ class _RentalManagementPageState extends State<RentalManagementPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
-      appBar: Navbar(currentPage: 'rental', isScrolled: _isScrolled),
+      appBar: Navbar(currentPage: 'invest', isScrolled: _isScrolled),
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
           children: [
             _buildHeader(),
-            const OurServicesSection(),
-            const OurProcessSection(),
-            const YourAdvantageSection(),
-            const ReadyToDelegateSection(),
+            const OurSolutionsSection(),
+            const SimulatorSection(),
+            const WhyInvestWithUsSection(),
+            const ReadyToInvestSection(),
             const CustomFooter(),
           ],
         ),
@@ -68,13 +66,14 @@ class _RentalManagementPageState extends State<RentalManagementPage> {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 120),
+      // Same decoration as RentalManagementPage
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
             AppColors.secondary,
-            Colors.white, // Blanc pur en bas
+            Colors.white, // Pure white at bottom
           ],
           stops: [0.3, 1.0],
         ),
@@ -86,20 +85,20 @@ class _RentalManagementPageState extends State<RentalManagementPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const CustomText(
-                text: 'GESTION LOCATIVE',
+                text: 'INVESTISSEMENT IMMOBILIER',
                 type: CustomTextType.sectionTagline,
                 color: Color(0xFFDAA520),
               ),
               const SizedBox(height: 24),
               const CustomText(
-                text: 'Confiez-nous la Gestion\nde Votre Bien',
+                text: 'Construisez Votre\nPatrimoine',
                 type: CustomTextType.heroTitle,
                 textAlign: TextAlign.start,
               ),
               const SizedBox(height: 24),
               const CustomText(
                 text:
-                    'Propriétaires, libérez-vous des contraintes de la gestion locative. Notre équipe d\'experts s\'occupe de tout pour maximiser vos revenus et préserver votre patrimoine.',
+                    'Investir dans l\'immobilier est l\'un des moyens les plus sûrs de construire votre patrimoine. Découvrez nos opportunités d\'investissement et bénéficiez d\'un accompagnement personnalisé.',
                 type: CustomTextType.sectionDescription,
                 textAlign: TextAlign.start,
               ),
@@ -108,14 +107,14 @@ class _RentalManagementPageState extends State<RentalManagementPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   _buildCTAButton(
-                    'Confier Mon Bien',
+                    'Simuler Mon Investissement',
                     AppColors.primary,
                     Colors.black,
-                    icon: Icons.arrow_forward,
+                    icon: Icons.calculate_outlined,
                   ),
                   const SizedBox(width: 20),
                   _buildCTAButton(
-                    'Nous Contacter',
+                    'Contacter un Expert',
                     Colors.transparent,
                     Colors.white,
                     isOutline: true,

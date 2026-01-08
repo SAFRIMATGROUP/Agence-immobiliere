@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../constants/colors.app.dart';
+import '../constants/colors.dart';
 import 'custom_text.dart';
 
 class Navbar extends StatefulWidget implements PreferredSizeWidget {
@@ -136,7 +136,8 @@ class _NavbarState extends State<Navbar> {
                     ),
                     child: const CustomText(
                       text: 'IM',
-                      type: CustomTextType.navTextBold, // Used bold type
+                      type: CustomTextType.label,
+                      fontWeight: FontWeight.bold,
                       color: AppColors.background,
                       fontSize: 16,
                     ),
@@ -144,7 +145,8 @@ class _NavbarState extends State<Navbar> {
                   const SizedBox(width: 8),
                   CustomText(
                     text: 'ImmoElite',
-                    type: CustomTextType.navTextBold, // Used bold type
+                    type: CustomTextType.label,
+                    fontWeight: FontWeight.bold,
                     color: widget.isScrolled ? Colors.black : Colors.white,
                     fontSize: 16,
                   ),
@@ -206,9 +208,9 @@ class _NavbarState extends State<Navbar> {
     final bool isDropdownOpen = isDropdown && _overlayEntry != null;
 
     // Use specific types based on state instead of fontWeight param
-    final CustomTextType textType = (isCurrentPage || isDropdownOpen)
-        ? CustomTextType.navTextBold
-        : CustomTextType.navText;
+    final FontWeight fontWeight = (isCurrentPage || isDropdownOpen)
+        ? FontWeight.bold
+        : FontWeight.w500;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -237,6 +239,10 @@ class _NavbarState extends State<Navbar> {
                 Navigator.pushReplacementNamed(context, '/real-estate');
               } else if (route == 'rental') {
                 Navigator.pushReplacementNamed(context, '/rental-management');
+              } else if (route == 'invest') {
+                Navigator.pushReplacementNamed(context, '/invest');
+              } else if (route == 'about') {
+                Navigator.pushReplacementNamed(context, '/about');
               }
             },
             child: Container(
@@ -259,7 +265,8 @@ class _NavbarState extends State<Navbar> {
                 children: [
                   CustomText(
                     text: title,
-                    type: textType, // Dynamic type selection
+                    type: CustomTextType.label, // Dynamic type selection
+                    fontWeight: fontWeight,
                     color: isCurrentPage
                         ? AppColors.primary
                         : (widget.isScrolled ? Colors.black : Colors.white),
@@ -320,14 +327,15 @@ class _DropdownItemState extends State<_DropdownItem> {
             children: [
               CustomText(
                 text: widget.title,
-                type: CustomTextType.navTextBold, // Used bold type
+                type: CustomTextType.label,
+                fontWeight: FontWeight.bold,
                 color: const Color(0xFF0C1D36),
                 fontSize: 15,
               ),
               const SizedBox(height: 4),
               CustomText(
                 text: widget.subtitle,
-                type: CustomTextType.caption,
+                type: CustomTextType.sectionDescription,
                 color: _isHovered
                     ? const Color(0xFF0C1D36).withOpacity(0.7)
                     : Colors.grey.shade600,

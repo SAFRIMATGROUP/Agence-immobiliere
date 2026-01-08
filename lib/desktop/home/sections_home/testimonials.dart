@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../../constants/colors.app.dart';
+import '../../../constants/colors.dart';
 import '../../../widgets/custom_text.dart';
 
 class TestimonialsSection extends StatefulWidget {
@@ -86,12 +86,12 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
             children: [
               const CustomText(
                 text: "TÉMOIGNAGES",
-                type: CustomTextType.testimonialTagline,
+                type: CustomTextType.sectionTagline,
               ),
               const SizedBox(height: 16),
               const CustomText(
                 text: "Ce Que Disent Nos Clients",
-                type: CustomTextType.testimonialTitle,
+                type: CustomTextType.sectionTitle,
               ),
 
               const SizedBox(height: 60),
@@ -244,7 +244,9 @@ class _TestimonialCard extends StatelessWidget {
               const SizedBox(height: 24),
               CustomText(
                 text: "\"${data['content']}\"",
-                type: CustomTextType.testimonialQuote,
+                type: CustomTextType.sectionDescriptionBlack,
+                fontStyle: FontStyle.italic,
+                fontSize: 20,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
@@ -270,11 +272,12 @@ class _TestimonialCard extends StatelessWidget {
                     children: [
                       CustomText(
                         text: data['name'],
-                        type: CustomTextType.testimonialName,
+                        type: CustomTextType.cardTitle,
                       ),
                       CustomText(
                         text: data['role'],
-                        type: CustomTextType.testimonialRole,
+                        type: CustomTextType.label,
+                        color: Colors.grey,
                       ),
                     ],
                   ),

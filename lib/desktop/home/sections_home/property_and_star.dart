@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../constants/colors.app.dart';
+import '../../../constants/colors.dart';
 import '../../../widgets/custom_text.dart';
 
 class PropertyAndStarSection extends StatelessWidget {
@@ -96,7 +96,7 @@ class PropertyAndStarSection extends StatelessWidget {
                         SizedBox(height: 16),
                         CustomText(
                           text: "Découvrez Nos Propriétés",
-                          type: CustomTextType.sectionBlack,
+                          type: CustomTextType.sectionTitle,
                         ),
                       ],
                     ),
@@ -228,7 +228,8 @@ class _PropertyCardState extends State<PropertyCard> {
                         ),
                         child: CustomText(
                           text: status,
-                          type: CustomTextType.propertyStatusBadge,
+                          type: CustomTextType.label,
+                          color: Colors.white,
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -244,7 +245,8 @@ class _PropertyCardState extends State<PropertyCard> {
                         ),
                         child: const CustomText(
                           text: 'EN VEDETTE',
-                          type: CustomTextType.propertyFeaturedBadge,
+                          type: CustomTextType.label,
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -274,7 +276,8 @@ class _PropertyCardState extends State<PropertyCard> {
                   left: 12,
                   child: CustomText(
                     text: widget.property['price'],
-                    type: CustomTextType.propertyPriceOverlay,
+                    type: CustomTextType.cardTitle,
+                    color: Colors.white,
                   ),
                 ),
               ],
@@ -286,7 +289,7 @@ class _PropertyCardState extends State<PropertyCard> {
                 children: [
                   CustomText(
                     text: widget.property['title'],
-                    type: CustomTextType.subtitle,
+                    type: CustomTextType.cardTitle,
                     fontSize: 16,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -303,7 +306,7 @@ class _PropertyCardState extends State<PropertyCard> {
                       Expanded(
                         child: CustomText(
                           text: widget.property['location'],
-                          type: CustomTextType.caption,
+                          type: CustomTextType.sectionDescriptionBlack,
                           fontSize: 13,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -345,7 +348,7 @@ class _PropertyCardState extends State<PropertyCard> {
         const SizedBox(width: 6),
         CustomText(
           text: text,
-          type: CustomTextType.caption,
+          type: CustomTextType.sectionDescription,
           fontSize: 13,
           color: Colors.grey.shade600,
         ),

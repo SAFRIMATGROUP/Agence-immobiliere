@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../constants/colors.app.dart';
+import '../../../constants/colors.dart';
 import '../../../widgets/custom_text.dart';
 
 class ReadyToBeginSection extends StatelessWidget {
@@ -36,7 +36,8 @@ class ReadyToBeginSection extends StatelessWidget {
               children: [
                 const CustomText(
                   text: "Trouvez Votre Bien Immobilier Idéal",
-                  type: CustomTextType.readyToBeginTitle,
+                  type: CustomTextType.sectionTitle,
+                  color: Colors.white,
                   textAlign: TextAlign.center,
                 ),
 
@@ -47,7 +48,8 @@ class ReadyToBeginSection extends StatelessWidget {
                   child: CustomText(
                     text:
                         "Rejoignez des milliers de clients satisfaits qui ont fait confiance à notre expertise pour réaliser leur projet immobilier.",
-                    type: CustomTextType.readyToBeginDescription,
+                    type: CustomTextType.sectionDescription,
+                    color: Colors.white,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -73,7 +75,7 @@ class ReadyToBeginSection extends StatelessWidget {
                       ),
                       child: const CustomText(
                         text: "Voir Nos Biens",
-                        type: CustomTextType.readyToBeginButton,
+                        type: CustomTextType.button,
                       ),
                     ),
 
@@ -94,7 +96,7 @@ class ReadyToBeginSection extends StatelessWidget {
                       ),
                       child: const CustomText(
                         text: "Nous Contacter",
-                        type: CustomTextType.readyToBeginButtonOutline,
+                        type: CustomTextType.button,
                       ),
                     ),
                   ],

@@ -21,13 +21,13 @@ class OurServicesSection extends StatelessWidget {
                 // Header Section
                 const CustomText(
                   text: 'NOS SERVICES',
-                  type: CustomTextType.rentalServiceTagline,
+                  type: CustomTextType.sectionTagline,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
                 const CustomText(
                   text: 'Une Gestion Complète et Sereine',
-                  type: CustomTextType.rentalServiceTitle,
+                  type: CustomTextType.sectionTitle,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
@@ -36,7 +36,7 @@ class OurServicesSection extends StatelessWidget {
                   child: CustomText(
                     text:
                         'Des services sur mesure pour répondre à tous vos besoins de gestion immobilière.',
-                    type: CustomTextType.rentalServiceSubtitle,
+                    type: CustomTextType.sectionDescriptionBlack,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -151,24 +151,21 @@ class _ServiceCardState extends State<_ServiceCard> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFFFF9E6), // Light gold background
+                color: const Color(0xFFFFF9E6),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
                 widget.icon,
-                color: const Color(0xFFDAA520), // Gold icon
+                color: const Color(0xFFDAA520),
                 size: 28,
               ),
             ),
             const SizedBox(height: 24),
-            CustomText(
-              text: widget.title,
-              type: CustomTextType.rentalCardTitle,
-            ),
+            CustomText(text: widget.title, type: CustomTextType.cardTitle),
             const SizedBox(height: 12),
             CustomText(
               text: widget.description,
-              type: CustomTextType.rentalCardDescription,
+              type: CustomTextType.sectionDescriptionBlack,
               maxLines: 4,
             ),
           ],

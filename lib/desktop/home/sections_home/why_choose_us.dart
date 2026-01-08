@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../constants/colors.app.dart';
+import '../../../constants/colors.dart';
 import '../../../widgets/custom_text.dart';
 
 class WhyChooseUsSection extends StatelessWidget {
@@ -47,7 +47,7 @@ class WhyChooseUsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity, // 100% de la largeur totale
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 80),
       decoration: const BoxDecoration(color: Color(0xFF1A3263)),
       child: Column(
@@ -55,33 +55,30 @@ class WhyChooseUsSection extends StatelessWidget {
           // Section titre avec bouton
           Center(
             child: SizedBox(
-              width:
-                  MediaQuery.of(context).size.width *
-                  0.6, // Contenu centré à 60%
+              width: MediaQuery.of(context).size.width * 0.6,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Titres
                   const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
                           text: "POURQUOI NOUS CHOISIR",
-                          type: CustomTextType.whyChooseUsTagline,
+                          type: CustomTextType.sectionTagline,
                         ),
                         SizedBox(height: 16),
                         CustomText(
                           text: "Une Expertise au Service de Vos Projets",
-                          type: CustomTextType.whyChooseUsTitle,
+                          type: CustomTextType.sectionTitle,
+                          color: Colors.white,
                         ),
                         SizedBox(height: 16),
                       ],
                     ),
                   ),
 
-                  // Bouton
                   Padding(
                     padding: const EdgeInsets.only(top: 90),
                     child: ElevatedButton(
@@ -103,7 +100,7 @@ class WhyChooseUsSection extends StatelessWidget {
                         children: [
                           CustomText(
                             text: 'En Savoir Plus',
-                            type: CustomTextType.whyChooseUsButton,
+                            type: CustomTextType.button,
                           ),
                           SizedBox(width: 8),
                           Icon(Icons.arrow_forward, size: 18),
@@ -118,12 +115,9 @@ class WhyChooseUsSection extends StatelessWidget {
 
           const SizedBox(height: 60),
 
-          // Grille de fonctionnalités
           Center(
             child: SizedBox(
-              width:
-                  MediaQuery.of(context).size.width *
-                  0.6, // Contenu centré à 60%
+              width: MediaQuery.of(context).size.width * 0.6,
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   const double spacing = 24;
@@ -171,12 +165,7 @@ class _FeatureCardState extends State<FeatureCard> {
         padding: const EdgeInsets.all(32),
         transform: Matrix4.identity()..scale(_isHovered ? 1.05 : 1.0),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(
-            255,
-            77,
-            108,
-            141,
-          ), // Bleu Nuit très profond
+          color: const Color.fromARGB(255, 77, 108, 141),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
             color: _isHovered
@@ -201,7 +190,6 @@ class _FeatureCardState extends State<FeatureCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Icône
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               padding: const EdgeInsets.all(16),
@@ -219,17 +207,17 @@ class _FeatureCardState extends State<FeatureCard> {
             ),
             const SizedBox(height: 24),
 
-            // Titre
             CustomText(
               text: widget.feature['title'],
-              type: CustomTextType.featureCardTitle,
+              type: CustomTextType.cardTitle,
+              color: Colors.white,
             ),
             const SizedBox(height: 12),
 
-            // Description
             CustomText(
               text: widget.feature['description'],
-              type: CustomTextType.featureCardDescription,
+              type: CustomTextType.sectionDescription,
+              color: Colors.white70,
             ),
           ],
         ),

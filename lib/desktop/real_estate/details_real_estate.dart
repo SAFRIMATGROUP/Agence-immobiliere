@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/colors.app.dart';
+import '../../constants/colors.dart';
 import '../../widgets/footer.dart';
 import '../../widgets/navbar.dart';
 import '../../widgets/custom_text.dart';
@@ -132,7 +132,8 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
                   ),
                   child: const CustomText(
                     text: 'IM',
-                    type: CustomTextType.navTextBold, // Bold type
+                    type: CustomTextType.label,
+                    fontWeight: FontWeight.bold,
                     color: AppColors.background,
                     fontSize: 16,
                   ),
@@ -140,7 +141,8 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
                 const SizedBox(width: 8),
                 const CustomText(
                   text: 'ImmoElite',
-                  type: CustomTextType.navTextBold, // Bold type
+                  type: CustomTextType.label,
+                  fontWeight: FontWeight.bold,
                   color: Colors.black,
                   fontSize: 16,
                 ),
@@ -154,33 +156,34 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
                   onTap: () => Navigator.pushNamed(context, '/home'),
                   child: const CustomText(
                     text: "Accueil",
-                    type: CustomTextType.navTextBlack,
+                    type: CustomTextType.label,
                     color: Colors.grey,
                   ),
                 ),
                 const CustomText(
                   text: " / ",
-                  type: CustomTextType.body,
+                  type: CustomTextType.sectionDescription,
                   color: Colors.grey,
                 ),
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: const CustomText(
                     text: "Biens",
-                    type: CustomTextType.navTextBlack,
+                    type: CustomTextType.label,
                     color: Colors.grey,
                   ),
                 ),
                 const CustomText(
                   text: " / ",
-                  type: CustomTextType.body,
+                  type: CustomTextType.sectionDescription,
                   color: Colors.grey,
                 ),
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 400),
                   child: CustomText(
                     text: widget.property['title'],
-                    type: CustomTextType.navTextBold, // Bold type
+                    type: CustomTextType.label,
+                    fontWeight: FontWeight.bold,
                     color: Colors.black,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -261,7 +264,8 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
             ),
             child: CustomText(
               text: widget.property['status'],
-              type: CustomTextType.navTextBold,
+              type: CustomTextType.label,
+              fontWeight: FontWeight.bold,
               fontSize: 14,
             ),
           ),
@@ -351,14 +355,15 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
         children: [
           const CustomText(
             text: "Prix",
-            type: CustomTextType.caption,
+            type: CustomTextType.label,
             color: Colors.grey,
             fontSize: 16,
           ),
           const SizedBox(height: 8),
           CustomText(
             text: widget.property['price'],
-            type: CustomTextType.priceText, // Centralized Price Style
+            type: CustomTextType.heroTitle,
+            color: AppColors.primary,
           ),
           const SizedBox(height: 16),
           const Row(
@@ -367,7 +372,8 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
               SizedBox(width: 8),
               CustomText(
                 text: "Publié le 06/01/2026",
-                type: CustomTextType.caption,
+                type: CustomTextType.sectionDescription,
+                fontSize: 14,
                 color: Colors.grey,
               ),
             ],
@@ -456,7 +462,7 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
         children: [
           const CustomText(
             text: "Villa contemporaine avec piscine",
-            type: CustomTextType.serifTitle, // Centralized Serif Title
+            type: CustomTextType.sectionTitle,
           ),
           const SizedBox(height: 8),
           const Row(
@@ -469,7 +475,7 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
               SizedBox(width: 8),
               CustomText(
                 text: "Quartier La Californie, 06400 Cannes",
-                type: CustomTextType.body,
+                type: CustomTextType.sectionDescription,
                 color: Colors.grey,
                 fontSize: 16,
               ),
@@ -497,7 +503,7 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
 
           const CustomText(
             text: "Description",
-            type: CustomTextType.serifSection, // Centralized Serif Section
+            type: CustomTextType.sectionTitle,
           ),
           const SizedBox(height: 16),
           CustomText(
@@ -506,7 +512,7 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
                 "Au rez-de-chaussée, vous découvrirez un vaste salon lumineux avec cheminée, une cuisine équipée ouvrant sur la terrasse, ainsi qu'une suite parentale avec dressing et salle de bains privative.\n\n"
                 "L'étage accueille 4 chambres spacieuses, toutes avec salle de bains attenante, offrant un confort optimal pour toute la famille.\n\n"
                 "À l'extérieur, profitez d'un jardin paysager de 800m², d'une piscine à débordement chauffée, d'un pool house et d'un garage double.",
-            type: CustomTextType.description,
+            type: CustomTextType.sectionDescription,
             color: Colors.grey.shade700,
             fontSize: 16,
           ),
@@ -514,7 +520,7 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
 
           const CustomText(
             text: "Caractéristiques",
-            type: CustomTextType.serifSection, // Centralized Serif Section
+            type: CustomTextType.sectionTitle,
           ),
           const SizedBox(height: 24),
           Wrap(
@@ -543,14 +549,14 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
         const SizedBox(height: 8),
         CustomText(
           text: value,
-          type: CustomTextType.statsNumberBlack,
+          type: CustomTextType.cardTitle,
           fontSize: 18,
           color: const Color(0xFF0C1D36),
         ),
         const SizedBox(height: 4),
         CustomText(
           text: label,
-          type: CustomTextType.statsLabelBlack,
+          type: CustomTextType.label,
           color: Colors.grey,
           fontSize: 14,
         ),
@@ -567,7 +573,7 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
           const SizedBox(width: 12),
           CustomText(
             text: label,
-            type: CustomTextType.body,
+            type: CustomTextType.sectionDescription,
             color: const Color(0xFF0C1D36),
             fontSize: 16,
           ),
@@ -595,7 +601,7 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
         children: [
           const CustomText(
             text: "Demande de visite",
-            type: CustomTextType.serifSubtitle, // Centralized Serif Subtitle
+            type: CustomTextType.cardTitle, // Centralized Serif Subtitle
           ),
           const SizedBox(height: 20),
           Row(
@@ -643,15 +649,7 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(
-          text: label,
-          type: CustomTextType.caption,
-          // FontWeight handled by caption or context if stricter rules needed,
-          // here using default caption style or similar.
-          // Note: Previous iteration used FontWeight.w500 override.
-          // If strictly no overrides, relying on type.
-          // Assuming caption supports w500 or is close enough.
-        ),
+        CustomText(text: label, type: CustomTextType.label),
         const SizedBox(height: 8),
         TextField(
           maxLines: maxLines,

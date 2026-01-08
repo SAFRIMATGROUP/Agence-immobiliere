@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../constants/colors.app.dart';
+import '../../constants/colors.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/navbar.dart';
-import 'sections_home/expertise_section.dart'; // Import de la section expertise
-import 'sections_home/property_and_star.dart'; // Import de la section propriétés
-import 'sections_home/why_choose_us.dart'; // Import de la section pourquoi nous choisir
-import 'sections_home/testimonials.dart'; // Import de la section témoignages
-import 'sections_home/ready_to_begin.dart'; // Import de la section ready to begin
-import '../../widgets/footer.dart'; // Import du footer
+import 'sections_home/expertise_section.dart';
+import 'sections_home/property_and_star.dart';
+import 'sections_home/why_choose_us.dart';
+import 'sections_home/testimonials.dart';
+import 'sections_home/ready_to_begin.dart';
+import '../../widgets/footer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -49,29 +49,20 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // Taille totale de l'écran
     final size = MediaQuery.of(context).size;
-    // Largeur de 60% (utilisée uniquement pour la Navbar et le Hero)
     final double contentWidth = size.width * 0.6;
 
     return Scaffold(
-      backgroundColor:
-          Colors.transparent, // Changé pour voir si ça vient du Scaffold
+      backgroundColor: Colors.transparent,
       body: Stack(
         children: [
-          // ---------------------------------------------------------
-          // CONTENU SCROLLABLE
-          // ---------------------------------------------------------
           Positioned.fill(
             child: SingleChildScrollView(
               controller: _scrollController,
               child: Column(
                 children: [
-                  // =======================================================
-                  // 1. SECTION DU HAUT (Image de fond + Hero + Stats)
-                  // =======================================================
                   Container(
-                    width: size.width, // Prend toute la largeur de l'écran
+                    width: size.width,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
@@ -91,21 +82,16 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      // Ici on CENTRE et on LIMITE à 60% le contenu sur l'image
                       child: Center(
                         child: SizedBox(
                           width: contentWidth,
                           child: Column(
                             children: [
-                              const SizedBox(
-                                height: 120,
-                              ), // Place pour la navbar
+                              const SizedBox(height: 120),
                               _buildHeroSection(),
                               _buildSearchBar(),
                               _buildStatisticsSection(),
-                              const SizedBox(
-                                height: 80,
-                              ), // Marge bas de l'image
+                              const SizedBox(height: 80),
                             ],
                           ),
                         ),
@@ -113,59 +99,38 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-                  // =======================================================
-                  // 2. SECTION EXPERTISE (Sous l'image)
-                  // =======================================================
                   Container(
-                    width: size.width, // Prend toute la largeur disponible
-                    color: Colors.white, // Fond blanc
+                    width: size.width,
+                    color: Colors.white,
                     child: const ExpertiseSection(),
                   ),
 
-                  // =======================================================
-                  // 3. SECTION PROPRIÉTÉS EN VEDETTE
-                  // =======================================================
                   Container(
-                    width: size.width, // Prend toute la largeur disponible
-                    color: const Color(0xFFF8FAFC), // Fond gris clair
+                    width: size.width,
+                    color: const Color(0xFFF8FAFC),
                     child: const PropertyAndStarSection(),
                   ),
 
-                  // =======================================================
-                  // 4. SECTION POURQUOI NOUS CHOISIR
-                  // =======================================================
                   Container(
-                    width: size.width, // Prend toute la largeur disponible
-                    color: Colors.white, // Fond blanc
+                    width: size.width,
+                    color: Colors.white,
                     child: const WhyChooseUsSection(),
                   ),
 
-                  // =======================================================
-                  // 5. SECTION TÉMOIGNAGES
-                  // =======================================================
                   Container(
-                    width: size.width, // Prend toute la largeur disponible
-                    color: Colors.white, // Fond blanc
+                    width: size.width,
+                    color: Colors.white,
                     child: const TestimonialsSection(),
                   ),
 
-                  // =======================================================
-                  // 6. SECTION PRÊT À COMMENCER
-                  // =======================================================
                   const ReadyToBeginSection(),
 
-                  // =======================================================
-                  // 7. FOOTER
-                  // =======================================================
                   const CustomFooter(),
                 ],
               ),
             ),
           ),
 
-          // ---------------------------------------------------------
-          // NAVBAR (Fixe et 100% de la largeur)
-          // ---------------------------------------------------------
           Positioned(
             top: 0,
             left: 0,
@@ -176,8 +141,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  // --- WIDGETS LOCAUX ---
 
   Widget _buildHeroSection() {
     return Padding(
@@ -205,7 +168,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(width: 12),
                 const CustomText(
                   text: 'Agence immobilière de confiance depuis 2010',
-                  type: CustomTextType.homeHeroTagline,
+                  type: CustomTextType.sectionTagline,
                 ),
               ],
             ),
@@ -213,14 +176,14 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 30),
           const CustomText(
             text: 'Trouvez le Bien\nde Vos Rêves',
-            type: CustomTextType.homeHeroTitle,
+            type: CustomTextType.heroTitle,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
           const CustomText(
             text:
                 'Expertise, innovation et accompagnement personnalisé pour tous vos projets immobiliers. Vente, location, investissement et gestion locative.',
-            type: CustomTextType.homeHeroDescription,
+            type: CustomTextType.sectionDescription,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 40),
@@ -244,7 +207,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     CustomText(
                       text: 'Voir les Biens',
-                      type: CustomTextType.homeHeroButton,
+                      type: CustomTextType.button,
                     ),
                     SizedBox(width: 8),
                     Icon(Icons.arrow_forward, size: 18),
@@ -267,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: const CustomText(
                   text: 'Confier Mon Bien',
-                  type: CustomTextType.homeHeroButtonOutline,
+                  type: CustomTextType.button,
                 ),
               ),
               const SizedBox(width: 20),
@@ -286,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: const CustomText(
                   text: 'Investir',
-                  type: CustomTextType.homeHeroButtonOutline,
+                  type: CustomTextType.button,
                 ),
               ),
             ],
@@ -354,9 +317,7 @@ class _HomePageState extends State<HomePage> {
                 focusNode: _cityFocusNode,
                 decoration: const InputDecoration(
                   hintText: 'Ville ou code postal',
-                  hintStyle: TextStyle(
-                    color: Colors.grey,
-                  ), // TextFormField hint keeps TextStyle
+                  hintStyle: TextStyle(color: Colors.grey),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 20,
@@ -386,10 +347,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Icon(Icons.search, size: 20),
                     SizedBox(width: 8),
-                    CustomText(
-                      text: 'Rechercher',
-                      type: CustomTextType.searchButton,
-                    ),
+                    CustomText(text: 'Rechercher', type: CustomTextType.button),
                   ],
                 ),
               ),
@@ -456,8 +414,8 @@ class _HomePageState extends State<HomePage> {
                       child: CustomText(
                         text: item,
                         type: isSelected
-                            ? CustomTextType.searchDropdownSelected
-                            : CustomTextType.searchDropdownNormal,
+                            ? CustomTextType.label
+                            : CustomTextType.label,
                       ),
                     ),
                   ),
@@ -471,9 +429,8 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                       child: CustomText(
                         text: value ?? hint,
-                        type: CustomTextType.searchDropdownNormal,
+                        type: CustomTextType.label,
                         overflow: TextOverflow.ellipsis,
-                        // Override color for hint if needed, handled by default style or dedicated type
                       ),
                     ),
                     Icon(
@@ -508,9 +465,17 @@ class _HomePageState extends State<HomePage> {
   Widget _buildStatItem(String number, String label) {
     return Column(
       children: [
-        CustomText(text: number, type: CustomTextType.homeStatNumber),
+        CustomText(
+          text: number,
+          type: CustomTextType.heroTitle,
+          color: Colors.white,
+        ),
         const SizedBox(height: 8),
-        CustomText(text: label, type: CustomTextType.homeStatLabel),
+        CustomText(
+          text: label,
+          type: CustomTextType.label,
+          color: Colors.white,
+        ),
       ],
     );
   }

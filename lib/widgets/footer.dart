@@ -8,10 +8,9 @@ class CustomFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: const Color(0xFF1A3263), // Dark blue background
+      color: const Color(0xFF1A3263),
       child: Column(
         children: [
-          // Contenu centré à 60%
           Center(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.6,
@@ -21,19 +20,17 @@ class CustomFooter extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // ImmoElite Column
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Logo
                             Row(
                               children: [
                                 Container(
                                   width: 40,
                                   height: 40,
                                   decoration: const BoxDecoration(
-                                    color: Color(0xFFFFD700), // Yellow
+                                    color: Color(0xFFFFD700),
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(4),
                                     ),
@@ -41,29 +38,32 @@ class CustomFooter extends StatelessWidget {
                                   child: const Center(
                                     child: CustomText(
                                       text: 'IM',
-                                      type: CustomTextType.footerLogoText,
+                                      type: CustomTextType.heroTitle,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
                                     ),
                                   ),
                                 ),
                                 const SizedBox(width: 8),
                                 const CustomText(
                                   text: 'ImmoElite',
-                                  type: CustomTextType.footerBrandName,
+                                  type: CustomTextType.label,
+                                  color: Colors.white,
                                 ),
                               ],
                             ),
                             const SizedBox(height: 20),
-                            // Description
                             const SizedBox(
                               width: 280,
                               child: CustomText(
                                 text:
                                     'Votre partenaire de confiance pour tous vos projets immobiliers. Expertise, innovation et accompagnement personnalisé.',
-                                type: CustomTextType.footerDescription,
+                                type: CustomTextType.sectionDescription,
+                                color: Colors.white70,
                               ),
                             ),
                             const SizedBox(height: 30),
-                            // Social Media Icons
                             Row(
                               children: [
                                 _buildSocialIcon(Icons.facebook),
@@ -80,14 +80,15 @@ class CustomFooter extends StatelessWidget {
                       ),
                       const SizedBox(width: 60),
 
-                      // Liens Rapides Column
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const CustomText(
                               text: 'Liens Rapides',
-                              type: CustomTextType.footerColumnTitle,
+                              type: CustomTextType.label,
+                              fontSize: 16,
+                              color: Colors.white,
                             ),
                             const SizedBox(height: 20),
                             _buildFooterLink('Accueil'),
@@ -101,14 +102,15 @@ class CustomFooter extends StatelessWidget {
                       ),
                       const SizedBox(width: 60),
 
-                      // Nos Services Column
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const CustomText(
                               text: 'Nos Services',
-                              type: CustomTextType.footerColumnTitle,
+                              type: CustomTextType.label,
+                              fontSize: 16,
+                              color: Colors.white,
                             ),
                             const SizedBox(height: 20),
                             _buildFooterLink('Vente & Location'),
@@ -122,14 +124,15 @@ class CustomFooter extends StatelessWidget {
                       ),
                       const SizedBox(width: 60),
 
-                      // Contact Column
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const CustomText(
                               text: 'Contact',
-                              type: CustomTextType.footerColumnTitle,
+                              type: CustomTextType.label,
+                              fontSize: 16,
+                              color: Colors.white,
                             ),
                             const SizedBox(height: 20),
                             _buildContactItem(
@@ -148,21 +151,16 @@ class CustomFooter extends StatelessWidget {
                                   '123 Avenue des Champs-Élysées\n75008 Paris, France',
                             ),
                             const SizedBox(height: 25),
-                            // WhatsApp Button
                             Container(
                               decoration: BoxDecoration(
-                                color: const Color(
-                                  0xFF25D366,
-                                ), // WhatsApp green
+                                color: const Color(0xFF25D366),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Material(
                                 color: Colors.transparent,
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(8),
-                                  onTap: () {
-                                    // WhatsApp action
-                                  },
+                                  onTap: () {},
                                   child: const Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal: 16,
@@ -179,7 +177,10 @@ class CustomFooter extends StatelessWidget {
                                         SizedBox(width: 8),
                                         CustomText(
                                           text: 'WhatsApp',
-                                          type: CustomTextType.footerLink,
+                                          type:
+                                              CustomTextType.sectionDescription,
+                                          fontSize: 14,
+                                          color: Colors.white,
                                         ),
                                       ],
                                     ),
@@ -201,7 +202,6 @@ class CustomFooter extends StatelessWidget {
           // Ligne horizontale sur 100% de la largeur
           Container(width: double.infinity, height: 1, color: Colors.white24),
 
-          // Copyright centré à 60%
           Center(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.6,
@@ -211,19 +211,21 @@ class CustomFooter extends StatelessWidget {
                 children: [
                   const CustomText(
                     text: '© 2024 ImmoElite. Tous droits réservés.',
-                    type: CustomTextType.footerCopyright,
+                    type: CustomTextType.label,
+                    fontSize: 12,
+                    color: Colors.white54,
                   ),
                   Row(
                     children: [
                       MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
-                          onTap: () {
-                            // Navigation vers mentions légales
-                          },
+                          onTap: () {},
                           child: const CustomText(
                             text: 'Mention légale',
-                            type: CustomTextType.footerCopyright,
+                            type: CustomTextType.label,
+                            fontSize: 12,
+                            color: Colors.white54,
                           ),
                         ),
                       ),
@@ -231,12 +233,12 @@ class CustomFooter extends StatelessWidget {
                       MouseRegion(
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
-                          onTap: () {
-                            // Navigation vers politique de confidentialité
-                          },
+                          onTap: () {},
                           child: const CustomText(
                             text: 'Politique de confidentialité',
-                            type: CustomTextType.footerCopyright,
+                            type: CustomTextType.label,
+                            fontSize: 12,
+                            color: Colors.white54,
                           ),
                         ),
                       ),
@@ -256,7 +258,7 @@ class CustomFooter extends StatelessWidget {
       width: 36,
       height: 36,
       decoration: const BoxDecoration(
-        color: Color(0xFF0F2347), // Darker blue
+        color: Color(0xFF0F2347),
         shape: BoxShape.circle,
       ),
       child: Icon(icon, color: Colors.white, size: 18),
@@ -269,10 +271,13 @@ class CustomFooter extends StatelessWidget {
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
-          onTap: () {
-            // Navigation logic
-          },
-          child: CustomText(text: text, type: CustomTextType.footerLink),
+          onTap: () {},
+          child: CustomText(
+            text: text,
+            type: CustomTextType.sectionDescription,
+            fontSize: 14,
+            color: Colors.white70,
+          ),
         ),
       ),
     );
@@ -282,14 +287,15 @@ class CustomFooter extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          icon,
-          color: const Color(0xFFFFD700), // Yellow
-          size: 18,
-        ),
+        Icon(icon, color: const Color(0xFFFFD700), size: 18),
         const SizedBox(width: 10),
         Expanded(
-          child: CustomText(text: text, type: CustomTextType.footerLink),
+          child: CustomText(
+            text: text,
+            type: CustomTextType.sectionDescription,
+            fontSize: 14,
+            color: Colors.white70,
+          ),
         ),
       ],
     );

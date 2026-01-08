@@ -21,13 +21,13 @@ class OurProcessSection extends StatelessWidget {
                 // Header
                 const CustomText(
                   text: 'NOTRE PROCESSUS',
-                  type: CustomTextType.rentalProcessTagline,
+                  type: CustomTextType.sectionTagline,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
                 const CustomText(
                   text: 'Comment Ça Marche',
-                  type: CustomTextType.rentalProcessTitle,
+                  type: CustomTextType.sectionTitle,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 80),
@@ -38,17 +38,16 @@ class OurProcessSection extends StatelessWidget {
                     final stepWidth = constraints.maxWidth / 4;
                     return Stack(
                       children: [
-                        // Connecting Line
                         Positioned(
-                          top: 30, // Center of the 60px circle
+                          top: 30,
                           left: stepWidth / 2,
                           right: stepWidth / 2,
                           child: Container(
                             height: 1,
-                            color: const Color(0xFFE2E8F0), // Light grey
+                            color: const Color(0xFFE2E8F0),
                           ),
                         ),
-                        // Steps
+
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -95,29 +94,32 @@ class OurProcessSection extends StatelessWidget {
             width: 60,
             height: 60,
             decoration: const BoxDecoration(
-              color: Color(0xFFDAA520), // Gold
+              color: Color(0xFFDAA520),
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
             child: CustomText(
               text: number,
-              type: CustomTextType.rentalProcessNumber,
+              type: CustomTextType.label,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 20,
             ),
           ),
           const SizedBox(height: 24),
-          // Title
+
           CustomText(
             text: title,
-            type: CustomTextType.rentalProcessStepTitle,
+            type: CustomTextType.cardTitle,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 12),
-          // Description
+
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: CustomText(
               text: description,
-              type: CustomTextType.rentalProcessStepDescription,
+              type: CustomTextType.sectionDescriptionBlack,
               textAlign: TextAlign.center,
             ),
           ),

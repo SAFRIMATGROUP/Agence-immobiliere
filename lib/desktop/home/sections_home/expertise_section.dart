@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../constants/colors.app.dart';
+import '../../../constants/colors.dart';
 import '../../../widgets/custom_text.dart';
 
 class ExpertiseSection extends StatelessWidget {
@@ -62,13 +62,11 @@ class ExpertiseSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 1. Get screen size
     final size = MediaQuery.of(context).size;
 
-    // 2. Wrap everything in a Center -> SizedBox (60% width)
     return Center(
       child: SizedBox(
-        width: size.width * 0.6, // Force 60% width
+        width: size.width * 0.6,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 80),
           child: Column(
@@ -76,13 +74,13 @@ class ExpertiseSection extends StatelessWidget {
             children: [
               const CustomText(
                 text: "NOS EXPERTISES",
-                type: CustomTextType.expertiseTagline,
+                type: CustomTextType.sectionTagline,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
               const CustomText(
                 text: "Des Services Complets",
-                type: CustomTextType.expertiseTitle,
+                type: CustomTextType.sectionTitle,
               ),
               const SizedBox(height: 16),
               const SizedBox(
@@ -90,7 +88,7 @@ class ExpertiseSection extends StatelessWidget {
                 child: CustomText(
                   text:
                       "Une gamme complète de services immobiliers pour répondre à tous vos besoins, de l'achat à la gestion de patrimoine.",
-                  type: CustomTextType.expertiseDescription,
+                  type: CustomTextType.sectionDescription,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -98,7 +96,6 @@ class ExpertiseSection extends StatelessWidget {
               LayoutBuilder(
                 builder: (context, constraints) {
                   const double spacing = 30;
-                  // Calculate card width based on the PARENT's width (which is 60% of screen)
                   final double cardWidth =
                       (constraints.maxWidth - (spacing * 2)) / 3;
 
@@ -183,35 +180,30 @@ class _ServiceCardState extends State<ServiceCard> {
               ),
               child: Icon(
                 widget.icon,
-                // MODIFICATION : L'icône devient NOIRE au survol
                 color: _isHovered ? Colors.black : AppColors.primary,
                 size: 28,
               ),
             ),
             const SizedBox(height: 24),
 
-            // CustomText handles the color change internally via type if we want robust logic,
-            // but for simple hover color changes, we might need a specific type that supports color override.
-            // However, CustomText supports 'color' property override.
             CustomText(
               text: widget.title,
-              type: CustomTextType.expertiseCardTitle,
-              color: _isHovered
-                  ? Colors.black
-                  : null, // Overriding color on hover
+              type: CustomTextType.cardTitle,
+              color: _isHovered ? Colors.black : null,
             ),
 
             const SizedBox(height: 12),
             CustomText(
               text: widget.description,
-              type: CustomTextType.expertiseCardDescription,
+              type: CustomTextType.sectionDescriptionBlack,
             ),
             const SizedBox(height: 24),
             Row(
               children: [
                 CustomText(
                   text: "En savoir plus",
-                  type: CustomTextType.expertiseCardLearnMore,
+                  type: CustomTextType.label,
+                  fontWeight: FontWeight.bold,
                   color: _isHovered ? Colors.black : AppColors.primary,
                 ),
                 const SizedBox(width: 8),

@@ -10,7 +10,7 @@ class ReadyToDelegateSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      color: const Color(0xFFF9F9F9), // Off-white background like Our Services
+      color: const Color(0xFFF9F9F9),
       child: Center(
         child: SizedBox(
           width: size.width * 0.70,
@@ -27,18 +27,18 @@ class ReadyToDelegateSection extends StatelessWidget {
                     children: [
                       const CustomText(
                         text: 'PRÊT À DÉLÉGUER ?',
-                        type: CustomTextType.readyDelegateTagline,
+                        type: CustomTextType.sectionTagline,
                       ),
                       const SizedBox(height: 16),
                       const CustomText(
                         text: 'Obtenez une Estimation\nGratuite',
-                        type: CustomTextType.readyDelegateTitle,
+                        type: CustomTextType.sectionTitle,
                       ),
                       const SizedBox(height: 24),
                       const CustomText(
                         text:
                             'Remplissez le formulaire ci-contre et recevez une proposition personnalisée pour la gestion de votre bien. C\'est gratuit et sans engagement.',
-                        type: CustomTextType.readyDelegateDescription,
+                        type: CustomTextType.sectionDescriptionBlack,
                       ),
                       const SizedBox(height: 40),
                       // Features
@@ -89,7 +89,7 @@ class ReadyToDelegateSection extends StatelessWidget {
                       children: [
                         const CustomText(
                           text: 'Demande de Gestion',
-                          type: CustomTextType.readyDelegateFormTitle,
+                          type: CustomTextType.cardTitle,
                         ),
                         const SizedBox(height: 32),
                         Row(
@@ -118,7 +118,7 @@ class ReadyToDelegateSection extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFFDAA520), // Gold
+                              backgroundColor: const Color(0xFFDAA520),
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -127,8 +127,7 @@ class ReadyToDelegateSection extends StatelessWidget {
                             child: const CustomText(
                               text: 'Envoyer',
                               type: CustomTextType.button,
-                              color:
-                                  Colors.black, // Assuming black text on gold
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -153,14 +152,11 @@ class ReadyToDelegateSection extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomText(
-              text: title,
-              type: CustomTextType.readyDelegateFeatureTitle,
-            ),
+            CustomText(text: title, type: CustomTextType.cardTitle),
             const SizedBox(height: 4),
             CustomText(
               text: subtitle,
-              type: CustomTextType.readyDelegateFeatureSubtitle,
+              type: CustomTextType.sectionDescriptionBlack,
             ),
           ],
         ),
@@ -172,7 +168,11 @@ class ReadyToDelegateSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomText(text: label, type: CustomTextType.readyDelegateFormLabel),
+        CustomText(
+          text: label,
+          type: CustomTextType.label,
+          color: Colors.black87,
+        ),
         const SizedBox(height: 8),
         TextField(
           maxLines: maxLines,
@@ -194,7 +194,7 @@ class ReadyToDelegateSection extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(
-                color: Color(0xFFDAA520), // Gold
+                color: Color(0xFFDAA520),
                 width: 1.5,
               ),
             ),

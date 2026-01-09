@@ -232,7 +232,7 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
           ),
           child: const CustomText(
             text: "Voir les biens",
-            type: CustomTextType.button,
+            type: CustomTextType.buttonBlack,
           ),
         ),
       ],

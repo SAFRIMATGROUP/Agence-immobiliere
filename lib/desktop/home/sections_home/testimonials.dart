@@ -15,6 +15,9 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   int _realIndex = 0;
   Timer? _timer;
 
+  // AJOUT : Variable pour savoir si la souris est dessus
+  bool _isHovering = false;
+
   static final List<Map<String, dynamic>> _testimonials = [
     {
       'content':
@@ -60,7 +63,13 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   }
 
   void _startAutoScroll() {
+    // On annule le timer précédent pour éviter les doublons
+    _timer?.cancel();
+
     _timer = Timer.periodic(const Duration(seconds: 6), (timer) {
+      // MODIFICATION : Si la souris est dessus, on ne change pas de page
+      if (_isHovering) return;
+
       _pageController.nextPage(
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
@@ -70,7 +79,10 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
 
   void _resetTimer() {
     _timer?.cancel();
-    _startAutoScroll();
+    // MODIFICATION : On ne relance le timer que si on ne survole pas
+    if (!_isHovering) {
+      _startAutoScroll();
+    }
   }
 
   @override
@@ -112,25 +124,41 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                   Expanded(
                     child: SizedBox(
                       height: 400,
-                      child: PageView.builder(
-                        controller: _pageController,
-                        clipBehavior: Clip.none,
-                        onPageChanged: (index) {
-                          setState(
-                            () => _realIndex = index % _testimonials.length,
-                          );
+                      // AJOUT : MouseRegion pour détecter le survol
+                      child: MouseRegion(
+                        onEnter: (_) {
+                          setState(() => _isHovering = true);
+                          _timer?.cancel(); // PAUSE
                         },
-
-                        itemBuilder: (context, index) {
-                          final testimonialIndex = index % _testimonials.length;
-
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 50, 20, 30),
-                            child: _TestimonialCard(
-                              data: _testimonials[testimonialIndex],
-                            ),
-                          );
+                        onExit: (_) {
+                          setState(() => _isHovering = false);
+                          _startAutoScroll(); // REPRISE
                         },
+                        child: PageView.builder(
+                          controller: _pageController,
+                          clipBehavior: Clip.none,
+                          onPageChanged: (index) {
+                            setState(
+                              () => _realIndex = index % _testimonials.length,
+                            );
+                          },
+                          itemBuilder: (context, index) {
+                            final testimonialIndex =
+                                index % _testimonials.length;
+
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                20,
+                                50,
+                                20,
+                                30,
+                              ),
+                              child: _TestimonialCard(
+                                data: _testimonials[testimonialIndex],
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -154,7 +182,7 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(_testimonials.length, (index) {
                   return AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
+                    duration: const Duration(milliseconds: 400),
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     height: 8,
                     width: _realIndex == index ? 24 : 8,

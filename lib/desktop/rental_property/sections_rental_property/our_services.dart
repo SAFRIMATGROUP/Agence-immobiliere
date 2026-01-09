@@ -13,7 +13,7 @@ class OurServicesSection extends StatelessWidget {
       color: const Color(0xFFF9F9F9),
       child: Center(
         child: SizedBox(
-          width: size.width * 0.70,
+          width: size.width * 0.6,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 80),
             child: Column(

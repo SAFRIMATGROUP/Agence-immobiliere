@@ -9,7 +9,7 @@ class AppTypography {
     fontFamily: 'Lato',
     fontWeight: FontWeight.bold,
     fontSize: 14,
-    color: Color(0xFFDAA520), // Gold
+    color: Colors.white, // Gold
     letterSpacing: 1.5,
   );
 
@@ -63,6 +63,13 @@ class AppTypography {
     fontWeight: FontWeight.bold,
     fontSize: 16,
     color: Colors.white, // Default can be overridden
+  );
+
+  static const TextStyle buttonBlack = TextStyle(
+    fontFamily: 'Lato',
+    fontWeight: FontWeight.bold,
+    fontSize: 16,
+    color: Colors.black, // Default can be overridden
   );
 
   // Labels (Inputs, Small headings)

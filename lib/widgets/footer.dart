@@ -91,12 +91,12 @@ class CustomFooter extends StatelessWidget {
                               color: Colors.white,
                             ),
                             const SizedBox(height: 20),
-                            _buildFooterLink('Accueil'),
-                            _buildFooterLink('Biens à Vendre'),
-                            _buildFooterLink('Biens à Louer'),
-                            _buildFooterLink('Gestion Locative'),
-                            _buildFooterLink('Investissement'),
-                            _buildFooterLink('Contact'),
+                            _buildFooterLink(context, 'Accueil'),
+                            _buildFooterLink(context, 'Biens à Vendre'),
+                            _buildFooterLink(context, 'Biens à Louer'),
+                            _buildFooterLink(context, 'Gestion Locative'),
+                            _buildFooterLink(context, 'Investissement'),
+                            _buildFooterLink(context, 'Contact'),
                           ],
                         ),
                       ),
@@ -113,12 +113,18 @@ class CustomFooter extends StatelessWidget {
                               color: Colors.white,
                             ),
                             const SizedBox(height: 20),
-                            _buildFooterLink('Vente & Location'),
-                            _buildFooterLink('Promotion Immobilière'),
-                            _buildFooterLink('Conseil & Investissement'),
-                            _buildFooterLink('Gestion Locative'),
-                            _buildFooterLink('Immobilier d\'Entreprise'),
-                            _buildFooterLink('Financement'),
+                            _buildFooterLink(context, 'Vente & Location'),
+                            _buildFooterLink(context, 'Promotion Immobilière'),
+                            _buildFooterLink(
+                              context,
+                              'Conseil & Investissement',
+                            ),
+                            _buildFooterLink(context, 'Gestion Locative'),
+                            _buildFooterLink(
+                              context,
+                              'Immobilier d\'Entreprise',
+                            ),
+                            _buildFooterLink(context, 'Financement'),
                           ],
                         ),
                       ),
@@ -265,13 +271,25 @@ class CustomFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildFooterLink(String text) {
+  Widget _buildFooterLink(BuildContext context, String text) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            if (text == 'Contact') {
+              Navigator.pushNamed(context, '/contact');
+            } else if (text == 'Accueil') {
+              Navigator.pushNamed(context, '/home');
+            } else if (text == 'Biens à Vendre' || text == 'Biens à Louer') {
+              Navigator.pushNamed(context, '/real-estate');
+            } else if (text == 'Gestion Locative') {
+              Navigator.pushNamed(context, '/rental-management');
+            } else if (text == 'Investissement') {
+              Navigator.pushNamed(context, '/invest');
+            }
+          },
           child: CustomText(
             text: text,
             type: CustomTextType.sectionDescription,

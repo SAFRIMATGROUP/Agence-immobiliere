@@ -139,7 +139,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
       'title': 'Grande Villa Familiale',
       'location': 'Ouagadougou - Ouaga 2000',
       'price': '350 000 000 FCFA',
-      'image': 'assets/images/imagesWeb/villa.png',
+      'image': 'assets/images/imagesWeb/mini_villa.png',
       'type': 'Villa',
       'status': 'À VENDRE',
       'featured': true,
@@ -249,7 +249,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         margin: const EdgeInsets.only(top: 40),
-        width: size.width * 0.7,
+        width: size.width * 0.6,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.white,

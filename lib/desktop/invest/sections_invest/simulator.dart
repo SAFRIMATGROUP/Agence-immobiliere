@@ -39,7 +39,7 @@ class _SimulatorSectionState extends State<SimulatorSection> {
       color: const Color(0xFFF5F5F5), // Same as Our Process
       child: Center(
         child: SizedBox(
-          width: size.width * 0.70,
+          width: size.width * 0.6,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 80),
             child: Column(

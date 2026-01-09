@@ -10,6 +10,7 @@ enum CustomTextType {
   sectionTagline,
   label,
   button,
+  buttonBlack,
 }
 
 class CustomText extends StatelessWidget {
@@ -100,6 +101,13 @@ class CustomText extends StatelessWidget {
         );
       case CustomTextType.button:
         return AppTypography.button.copyWith(
+          color: color,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          fontStyle: fontStyle,
+        );
+      case CustomTextType.buttonBlack:
+        return AppTypography.buttonBlack.copyWith(
           color: color,
           fontSize: fontSize,
           fontWeight: fontWeight,

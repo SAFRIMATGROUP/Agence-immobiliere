@@ -5,6 +5,9 @@ import '../../widgets/navbar.dart';
 import '../../widgets/footer.dart';
 import 'our_story.dart';
 import 'our_adn.dart';
+import 'team.dart';
+import 'our_partners.dart';
+import 'ready_to_meet_us.dart';
 
 class AboutUsPage extends StatefulWidget {
   const AboutUsPage({super.key});
@@ -59,7 +62,7 @@ class _AboutUsPageState extends State<AboutUsPage> {
               decoration: const BoxDecoration(color: AppColors.secondary),
               child: Center(
                 child: SizedBox(
-                  width: size.width * 0.70,
+                  width: size.width * 0.6,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -95,8 +98,14 @@ class _AboutUsPageState extends State<AboutUsPage> {
             // Our ADN Section
             const OurAdnSection(),
 
-            // Placeholder for other sections
-            const SizedBox(height: 100),
+            // Team Section
+            const TeamSection(),
+
+            // Partners Section
+            const OurPartnersSection(),
+
+            // Ready To Meet Us Section
+            const ReadyToMeetUsSection(),
 
             const CustomFooter(),
           ],

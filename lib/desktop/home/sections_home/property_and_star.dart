@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../constants/colors.dart';
 import '../../../widgets/custom_text.dart';
+import '../../real_estate/details_real_estate.dart';
 
 class PropertyAndStarSection extends StatelessWidget {
   const PropertyAndStarSection({super.key});
@@ -90,7 +91,7 @@ class PropertyAndStarSection extends StatelessWidget {
                       children: [
                         CustomText(
                           text: "BIENS EN VEDETTE",
-                          type: CustomTextType.button,
+                          type: CustomTextType.buttonBlack,
                           fontSize: 14,
                         ),
                         SizedBox(height: 16),
@@ -104,7 +105,9 @@ class PropertyAndStarSection extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/real-estate');
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: AppColors.background,
@@ -122,7 +125,7 @@ class PropertyAndStarSection extends StatelessWidget {
                         children: [
                           CustomText(
                             text: 'Voir Tous les Biens',
-                            type: CustomTextType.button,
+                            type: CustomTextType.buttonBlack,
                             fontSize: 16,
                           ),
                           SizedBox(width: 8),
@@ -180,162 +183,178 @@ class _PropertyCardState extends State<PropertyCard> {
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
-      child: Container(
-        width: widget.width,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(_isHovered ? 0.15 : 0.08),
-              blurRadius: _isHovered ? 20 : 12,
-              offset: Offset(0, _isHovered ? 8 : 4),
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          // Create a copy of the map and add 'status' key which DetailsRealEstatePage expects
+          final Map<String, dynamic> propertyData = Map.from(widget.property);
+          propertyData['status'] = widget.property['type'];
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  DetailsRealEstatePage(property: propertyData),
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(12),
-                    ),
-                    image: DecorationImage(
-                      image: AssetImage(widget.property['image']),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                // Badges en haut à gauche
-                Positioned(
-                  top: 12,
-                  left: 12,
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: statusColor,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: CustomText(
-                          text: status,
-                          type: CustomTextType.label,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      // EN VEDETTE - Permanent
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFFFD700),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: const CustomText(
-                          text: 'EN VEDETTE',
-                          type: CustomTextType.label,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: 12,
-                  right: 12,
-                  child: GestureDetector(
-                    onTap: () => setState(() => _isFavorite = !_isFavorite),
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        _isFavorite ? Icons.favorite : Icons.favorite_border,
-                        color: _isFavorite ? Colors.red : Colors.grey,
-                        size: 18,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 12,
-                  left: 12,
-                  child: CustomText(
-                    text: widget.property['price'],
-                    type: CustomTextType.cardTitle,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          );
+        },
+        child: Container(
+          width: widget.width,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(_isHovered ? 0.15 : 0.08),
+                blurRadius: _isHovered ? 20 : 12,
+                offset: Offset(0, _isHovered ? 8 : 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
                 children: [
-                  CustomText(
-                    text: widget.property['title'],
-                    type: CustomTextType.cardTitle,
-                    fontSize: 16,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on_outlined,
-                        size: 16,
-                        color: Colors.grey,
+                  Container(
+                    width: double.infinity,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(12),
                       ),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: CustomText(
-                          text: widget.property['location'],
-                          type: CustomTextType.sectionDescriptionBlack,
-                          fontSize: 13,
-                          overflow: TextOverflow.ellipsis,
+                      image: DecorationImage(
+                        image: AssetImage(widget.property['image']),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  // Badges en haut à gauche
+                  Positioned(
+                    top: 12,
+                    left: 12,
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: statusColor,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: CustomText(
+                            text: status,
+                            type: CustomTextType.label,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        // EN VEDETTE - Permanent
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFD700),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: const CustomText(
+                            text: 'EN VEDETTE',
+                            type: CustomTextType.label,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: GestureDetector(
+                      onTap: () => setState(() => _isFavorite = !_isFavorite),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.9),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          _isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: _isFavorite ? Colors.red : Colors.grey,
+                          size: 18,
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      _buildDetailItem(
-                        Icons.crop_free,
-                        widget.property['surface'],
-                      ),
-                      const SizedBox(width: 16),
-                      _buildDetailItem(
-                        Icons.bed_outlined,
-                        '${widget.property['rooms']} ch.',
-                      ),
-                      const SizedBox(width: 16),
-                      _buildDetailItem(
-                        Icons.bathtub_outlined,
-                        '${widget.property['bathrooms']} sdb',
-                      ),
-                    ],
+                  Positioned(
+                    bottom: 12,
+                    left: 12,
+                    child: CustomText(
+                      text: widget.property['price'],
+                      type: CustomTextType.cardTitle,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                      text: widget.property['title'],
+                      type: CustomTextType.cardTitle,
+                      fontSize: 16,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.location_on_outlined,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: CustomText(
+                            text: widget.property['location'],
+                            type: CustomTextType.sectionDescriptionBlack,
+                            fontSize: 13,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        _buildDetailItem(
+                          Icons.crop_free,
+                          widget.property['surface'],
+                        ),
+                        const SizedBox(width: 16),
+                        _buildDetailItem(
+                          Icons.bed_outlined,
+                          '${widget.property['rooms']} ch.',
+                        ),
+                        const SizedBox(width: 16),
+                        _buildDetailItem(
+                          Icons.bathtub_outlined,
+                          '${widget.property['bathrooms']} sdb',
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

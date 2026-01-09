@@ -18,7 +18,7 @@ class OurStorySection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 80),
           child: Center(
             child: SizedBox(
-              width: size.width * 0.70,
+              width: size.width * 0.6,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -108,7 +108,7 @@ class OurStorySection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 60),
           child: Center(
             child: SizedBox(
-              width: size.width * 0.70,
+              width: size.width * 0.6,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [

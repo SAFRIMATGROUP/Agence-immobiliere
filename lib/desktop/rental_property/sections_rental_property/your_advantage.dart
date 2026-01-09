@@ -13,7 +13,7 @@ class YourAdvantageSection extends StatelessWidget {
       color: const Color(0xFF0F172A),
       child: Center(
         child: SizedBox(
-          width: size.width * 0.70,
+          width: size.width * 0.6,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 80),
             child: Row(

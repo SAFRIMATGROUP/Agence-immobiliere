@@ -243,6 +243,8 @@ class _NavbarState extends State<Navbar> {
                 Navigator.pushReplacementNamed(context, '/invest');
               } else if (route == 'about') {
                 Navigator.pushReplacementNamed(context, '/about');
+              } else if (route == 'contact') {
+                Navigator.pushReplacementNamed(context, '/contact');
               }
             },
             child: Container(

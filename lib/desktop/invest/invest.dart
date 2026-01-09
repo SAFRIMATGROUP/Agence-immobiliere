@@ -80,7 +80,7 @@ class _InvestPageState extends State<InvestPage> {
       ),
       child: Center(
         child: SizedBox(
-          width: size.width * 0.70,
+          width: size.width * 0.6,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

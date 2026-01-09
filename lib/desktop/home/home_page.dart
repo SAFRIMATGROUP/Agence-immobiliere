@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/colors.dart';
+import '../../constants/typography.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/navbar.dart';
 import 'sections_home/expertise_section.dart';
@@ -174,10 +175,18 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(height: 30),
-          const CustomText(
-            text: 'Trouvez le Bien\nde Vos Rêves',
-            type: CustomTextType.heroTitle,
+          RichText(
             textAlign: TextAlign.center,
+            text: TextSpan(
+              style: AppTypography.heroTitle, // Base style (White)
+              children: const [
+                TextSpan(text: 'Trouvez le Bien\n'),
+                TextSpan(
+                  text: 'de Vos Rêves',
+                  style: TextStyle(color: AppColors.primary), // Gold override
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 20),
           const CustomText(
@@ -468,7 +477,7 @@ class _HomePageState extends State<HomePage> {
         CustomText(
           text: number,
           type: CustomTextType.heroTitle,
-          color: Colors.white,
+          color: AppColors.primary,
         ),
         const SizedBox(height: 8),
         CustomText(

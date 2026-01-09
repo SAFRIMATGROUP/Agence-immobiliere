@@ -14,7 +14,7 @@ class ReadyToInvestSection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 80),
       child: Center(
         child: SizedBox(
-          width: size.width * 0.70,
+          width: size.width * 0.6,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

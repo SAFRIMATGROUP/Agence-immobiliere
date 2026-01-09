@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// Forced re-analysis update
+
 import '../../constants/colors.dart';
 import '../../widgets/footer.dart';
 import '../../widgets/navbar.dart';
@@ -46,6 +48,29 @@ class _DetailsRealEstatePageState extends State<DetailsRealEstatePage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      endDrawer: Container(
+        width: size.width * 0.8,
+        color: Colors.white,
+        child: Column(
+          children: [
+            const SizedBox(height: 40),
+            ListTile(
+              title: const CustomText(
+                text: "Accueil",
+                type: CustomTextType.sectionTitle,
+              ),
+              onTap: () => Navigator.pushNamed(context, '/home'),
+            ),
+            ListTile(
+              title: const CustomText(
+                text: "Biens",
+                type: CustomTextType.sectionTitle,
+              ),
+              onTap: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      ),
       body: Stack(
         children: [
           SingleChildScrollView(

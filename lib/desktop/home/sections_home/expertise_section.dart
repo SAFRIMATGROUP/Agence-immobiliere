@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import '../../../constants/colors.dart';
 import '../../../widgets/custom_text.dart';
 
@@ -64,9 +65,17 @@ class ExpertiseSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
+    // Adaptation de la largeur du conteneur global
+    final double contentWidth = getValueForScreenType<double>(
+      context: context,
+      mobile: size.width * 0.9,
+      tablet: size.width * 0.85,
+      desktop: size.width * 0.7,
+    );
+
     return Center(
       child: SizedBox(
-        width: size.width * 0.6,
+        width: contentWidth,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 80),
           child: Column(
@@ -76,6 +85,7 @@ class ExpertiseSection extends StatelessWidget {
                 text: "NOS EXPERTISES",
                 type: CustomTextType.sectionTagline,
                 textAlign: TextAlign.center,
+                color: AppColors.primary,
               ),
               const SizedBox(height: 16),
               const CustomText(
@@ -88,16 +98,28 @@ class ExpertiseSection extends StatelessWidget {
                 child: CustomText(
                   text:
                       "Une gamme complète de services immobiliers pour répondre à tous vos besoins, de l'achat à la gestion de patrimoine.",
-                  type: CustomTextType.sectionDescription,
+                  type: CustomTextType.sectionDescriptionBlack,
                   textAlign: TextAlign.center,
                 ),
               ),
               const SizedBox(height: 60),
+
               LayoutBuilder(
                 builder: (context, constraints) {
                   const double spacing = 30;
+
+                  int columns;
+                  if (constraints.maxWidth < 600) {
+                    columns = 1;
+                  } else if (constraints.maxWidth <= 800) {
+                    columns = 2;
+                  } else {
+                    columns = 3;
+                  }
+
                   final double cardWidth =
-                      (constraints.maxWidth - (spacing * 2)) / 3;
+                      (constraints.maxWidth - (spacing * (columns - 1))) /
+                      columns;
 
                   return Wrap(
                     spacing: spacing,
@@ -175,7 +197,10 @@ class _ServiceCardState extends State<ServiceCard> {
               duration: const Duration(milliseconds: 200),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: _isHovered ? AppColors.primary : AppColors.primaryLight,
+                // Remplace AppColors.primaryLight par une opacité si non défini
+                color: _isHovered
+                    ? AppColors.primary
+                    : AppColors.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(
@@ -198,7 +223,11 @@ class _ServiceCardState extends State<ServiceCard> {
               type: CustomTextType.sectionDescriptionBlack,
             ),
             const SizedBox(height: 24),
-            Row(
+
+            // Lien "En savoir plus"
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 8,
               children: [
                 CustomText(
                   text: "En savoir plus",
@@ -206,7 +235,6 @@ class _ServiceCardState extends State<ServiceCard> {
                   fontWeight: FontWeight.bold,
                   color: _isHovered ? Colors.black : AppColors.primary,
                 ),
-                const SizedBox(width: 8),
                 Icon(
                   Icons.arrow_forward,
                   size: 16,

@@ -1,0 +1,140 @@
+  Widget _buildBrandColumn() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: Color(0xFFFFD700),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(4),
+                ),
+              ),
+              child: const Center(
+                child: CustomText(
+                  text: 'IM',
+                  type: CustomTextType.heroTitle,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            const CustomText(
+              text: 'ImmoElite',
+              type: CustomTextType.label,
+              color: Colors.white,
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        const SizedBox(
+          width: 280,
+          child: CustomText(
+            text:
+                'Votre partenaire de confiance pour tous vos projets immobiliers. Expertise, innovation et accompagnement personnalisé.',
+            type: CustomTextType.sectionDescription,
+            color: Colors.white70,
+          ),
+        ),
+        const SizedBox(height: 30),
+        Row(
+          children: [
+            _buildSocialIcon(Icons.facebook),
+            const SizedBox(width: 12),
+            _buildSocialIcon(Icons.camera_alt),
+            const SizedBox(width: 12),
+            _buildSocialIcon(Icons.business_center),
+            const SizedBox(width: 12),
+            _buildSocialIcon(Icons.alternate_email),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLinksColumn(BuildContext context, String title, List<String> links) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CustomText(
+          text: title,
+          type: CustomTextType.label,
+          fontSize: 16,
+          color: Colors.white,
+        ),
+        const SizedBox(height: 20),
+        ...links.map((link) => _buildFooterLink(context, link)),
+      ],
+    );
+  }
+
+  Widget _buildContactColumn() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const CustomText(
+          text: 'Contact',
+          type: CustomTextType.label,
+          fontSize: 16,
+          color: Colors.white,
+        ),
+        const SizedBox(height: 20),
+        _buildContactItem(
+          icon: Icons.phone,
+          text: '+33 1 23 45 67 89',
+        ),
+        const SizedBox(height: 12),
+        _buildContactItem(
+          icon: Icons.email,
+          text: 'contact@immobilier.fr',
+        ),
+        const SizedBox(height: 12),
+        _buildContactItem(
+          icon: Icons.location_on,
+          text: '123 Avenue des Champs-Élysées\n75008 Paris, France',
+        ),
+        const SizedBox(height: 25),
+        Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF25D366),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(8),
+              onTap: () {},
+              child: const Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.message,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                    SizedBox(width: 8),
+                    CustomText(
+                      text: 'WhatsApp',
+                      type: CustomTextType.sectionDescription,
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }

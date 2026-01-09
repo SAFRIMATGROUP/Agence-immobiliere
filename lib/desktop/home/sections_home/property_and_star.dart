@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import '../../../constants/colors.dart';
 import '../../../widgets/custom_text.dart';
 import '../../real_estate/details_real_estate.dart';
@@ -73,20 +74,27 @@ class PropertyAndStarSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
+    // Adaptation de la largeur du conteneur global
+    final double contentWidth = getValueForScreenType<double>(
+      context: context,
+      mobile: size.width * 0.95, // Un peu plus large sur mobile
+      tablet: size.width * 0.9,
+      desktop: size.width * 0.7,
+    );
+
     return Center(
       child: SizedBox(
-        width: size.width * 0.6,
+        width: contentWidth,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 80),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Expanded(
-                    child: Column(
+              ScreenTypeLayout.builder(
+                mobile: (context) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
@@ -101,10 +109,8 @@ class PropertyAndStarSection extends StatelessWidget {
                         ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: ElevatedButton(
+                    const SizedBox(height: 20),
+                    ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/real-estate');
                       },
@@ -133,15 +139,88 @@ class PropertyAndStarSection extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
+                desktop: (context) => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: "BIENS EN VEDETTE",
+                            type: CustomTextType.buttonBlack,
+                            fontSize: 14,
+                          ),
+                          SizedBox(height: 16),
+                          CustomText(
+                            text: "Découvrez Nos Propriétés",
+                            type: CustomTextType.sectionTitle,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/real-estate');
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: AppColors.background,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                            vertical: 16,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            side: BorderSide(color: Colors.grey.shade300),
+                          ),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomText(
+                              text: 'Voir Tous les Biens',
+                              type: CustomTextType.buttonBlack,
+                              fontSize: 16,
+                            ),
+                            SizedBox(width: 8),
+                            Icon(Icons.arrow_forward, size: 18),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 60),
+
+              // --- LOGIQUE DE GRILLE 600px / 800px ---
               LayoutBuilder(
                 builder: (context, constraints) {
                   const double spacing = 24;
+                  int columns;
+
+                  // < 600px -> 1 colonne
+                  if (constraints.maxWidth < 600) {
+                    columns = 1;
+                  }
+                  // Entre 600 et 800 (inclus) -> 2 colonnes
+                  else if (constraints.maxWidth <= 800) {
+                    columns = 2;
+                  }
+                  // > 800 -> 3 colonnes
+                  else {
+                    columns = 3;
+                  }
+
                   final double cardWidth =
-                      (constraints.maxWidth - (spacing * 2)) / 3;
+                      (constraints.maxWidth - (spacing * (columns - 1))) /
+                      columns;
 
                   return Wrap(
                     spacing: spacing,
@@ -176,7 +255,7 @@ class _PropertyCardState extends State<PropertyCard> {
 
   @override
   Widget build(BuildContext context) {
-    // Logique de couleur : Bleu pour Louer, Rouge pour Vendre
+    // Logique de couleur
     final String status = widget.property['type'].toString().toUpperCase();
     final Color statusColor = (status == 'À LOUER') ? Colors.blue : Colors.red;
 
@@ -186,7 +265,6 @@ class _PropertyCardState extends State<PropertyCard> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
-          // Create a copy of the map and add 'status' key which DetailsRealEstatePage expects
           final Map<String, dynamic> propertyData = Map.from(widget.property);
           propertyData['status'] = widget.property['type'];
 
@@ -213,6 +291,7 @@ class _PropertyCardState extends State<PropertyCard> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min, // Empêche l'overflow vertical
             children: [
               Stack(
                 children: [
@@ -229,11 +308,14 @@ class _PropertyCardState extends State<PropertyCard> {
                       ),
                     ),
                   ),
-                  // Badges en haut à gauche
+                  // Badges
                   Positioned(
                     top: 12,
                     left: 12,
-                    child: Row(
+                    child: Wrap(
+                      // Utilisation de Wrap pour éviter overflow badges
+                      spacing: 8,
+                      runSpacing: 4,
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -248,10 +330,9 @@ class _PropertyCardState extends State<PropertyCard> {
                             text: status,
                             type: CustomTextType.label,
                             color: Colors.white,
+                            fontSize: 10,
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        // EN VEDETTE - Permanent
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8,
@@ -265,6 +346,7 @@ class _PropertyCardState extends State<PropertyCard> {
                             text: 'EN VEDETTE',
                             type: CustomTextType.label,
                             color: Colors.black,
+                            fontSize: 10,
                           ),
                         ),
                       ],
@@ -289,22 +371,33 @@ class _PropertyCardState extends State<PropertyCard> {
                       ),
                     ),
                   ),
+                  // Prix avec FittedBox pour éviter overflow
                   Positioned(
                     bottom: 12,
                     left: 12,
-                    child: CustomText(
-                      text: widget.property['price'],
-                      type: CustomTextType.cardTitle,
-                      color: Colors.white,
+                    right: 12,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: CustomText(
+                          text: widget.property['price'],
+                          type: CustomTextType.cardTitle,
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
                     ),
                   ),
                 ],
               ),
+
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Titre avec ellipsis
                     CustomText(
                       text: widget.property['title'],
                       type: CustomTextType.cardTitle,
@@ -313,6 +406,7 @@ class _PropertyCardState extends State<PropertyCard> {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 8),
+                    // Localisation avec Expanded
                     Row(
                       children: [
                         const Icon(
@@ -326,24 +420,26 @@ class _PropertyCardState extends State<PropertyCard> {
                             text: widget.property['location'],
                             type: CustomTextType.sectionDescriptionBlack,
                             fontSize: 13,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Row(
+                    // Détails avec Wrap au lieu de Row pour éviter overflow
+                    Wrap(
+                      spacing: 16,
+                      runSpacing: 8,
                       children: [
                         _buildDetailItem(
                           Icons.crop_free,
                           widget.property['surface'],
                         ),
-                        const SizedBox(width: 16),
                         _buildDetailItem(
                           Icons.bed_outlined,
                           '${widget.property['rooms']} ch.',
                         ),
-                        const SizedBox(width: 16),
                         _buildDetailItem(
                           Icons.bathtub_outlined,
                           '${widget.property['bathrooms']} sdb',
@@ -362,14 +458,18 @@ class _PropertyCardState extends State<PropertyCard> {
 
   Widget _buildDetailItem(IconData icon, String text) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, size: 16, color: Colors.grey.shade500),
         const SizedBox(width: 6),
-        CustomText(
-          text: text,
-          type: CustomTextType.sectionDescription,
-          fontSize: 13,
-          color: Colors.grey.shade600,
+        Flexible(
+          child: CustomText(
+            text: text,
+            type: CustomTextType.sectionDescription,
+            fontSize: 13,
+            color: Colors.grey.shade600,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'custom_text.dart';
 
 class CustomFooter extends StatelessWidget {
@@ -13,194 +14,70 @@ class CustomFooter extends StatelessWidget {
         children: [
           Center(
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.6,
-              padding: const EdgeInsets.all(60),
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFFFFD700),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(4),
-                                    ),
-                                  ),
-                                  child: const Center(
-                                    child: CustomText(
-                                      text: 'IM',
-                                      type: CustomTextType.heroTitle,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 8),
-                                const CustomText(
-                                  text: 'ImmoElite',
-                                  type: CustomTextType.label,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            const SizedBox(
-                              width: 280,
-                              child: CustomText(
-                                text:
-                                    'Votre partenaire de confiance pour tous vos projets immobiliers. Expertise, innovation et accompagnement personnalisé.',
-                                type: CustomTextType.sectionDescription,
-                                color: Colors.white70,
-                              ),
-                            ),
-                            const SizedBox(height: 30),
-                            Row(
-                              children: [
-                                _buildSocialIcon(Icons.facebook),
-                                const SizedBox(width: 12),
-                                _buildSocialIcon(Icons.camera_alt),
-                                const SizedBox(width: 12),
-                                _buildSocialIcon(Icons.business_center),
-                                const SizedBox(width: 12),
-                                _buildSocialIcon(Icons.alternate_email),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 60),
-
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const CustomText(
-                              text: 'Liens Rapides',
-                              type: CustomTextType.label,
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(height: 20),
-                            _buildFooterLink(context, 'Accueil'),
-                            _buildFooterLink(context, 'Biens à Vendre'),
-                            _buildFooterLink(context, 'Biens à Louer'),
-                            _buildFooterLink(context, 'Gestion Locative'),
-                            _buildFooterLink(context, 'Investissement'),
-                            _buildFooterLink(context, 'Contact'),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 60),
-
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const CustomText(
-                              text: 'Nos Services',
-                              type: CustomTextType.label,
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(height: 20),
-                            _buildFooterLink(context, 'Vente & Location'),
-                            _buildFooterLink(context, 'Promotion Immobilière'),
-                            _buildFooterLink(
-                              context,
-                              'Conseil & Investissement',
-                            ),
-                            _buildFooterLink(context, 'Gestion Locative'),
-                            _buildFooterLink(
-                              context,
-                              'Immobilier d\'Entreprise',
-                            ),
-                            _buildFooterLink(context, 'Financement'),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 60),
-
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const CustomText(
-                              text: 'Contact',
-                              type: CustomTextType.label,
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(height: 20),
-                            _buildContactItem(
-                              icon: Icons.phone,
-                              text: '+33 1 23 45 67 89',
-                            ),
-                            const SizedBox(height: 12),
-                            _buildContactItem(
-                              icon: Icons.email,
-                              text: 'contact@immobilier.fr',
-                            ),
-                            const SizedBox(height: 12),
-                            _buildContactItem(
-                              icon: Icons.location_on,
-                              text:
-                                  '123 Avenue des Champs-Élysées\n75008 Paris, France',
-                            ),
-                            const SizedBox(height: 25),
-                            Container(
-                              decoration: BoxDecoration(
-                                color: const Color(0xFF25D366),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Material(
-                                color: Colors.transparent,
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(8),
-                                  onTap: () {},
-                                  child: const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 10,
-                                    ),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Icon(
-                                          Icons.message,
-                                          color: Colors.white,
-                                          size: 20,
-                                        ),
-                                        SizedBox(width: 8),
-                                        CustomText(
-                                          text: 'WhatsApp',
-                                          type:
-                                              CustomTextType.sectionDescription,
-                                          fontSize: 14,
-                                          color: Colors.white,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 60),
-                ],
+              width:
+                  MediaQuery.of(context).size.width *
+                  0.9, // Wider on mobile by default
+              constraints: const BoxConstraints(
+                maxWidth: 1200,
+              ), // Max width for desktop
+              padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+              child: ScreenTypeLayout.builder(
+                mobile: (context) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildBrandColumn(),
+                    const SizedBox(height: 40),
+                    _buildLinksColumn(context, 'Liens Rapides', [
+                      'Accueil',
+                      'Biens à Vendre',
+                      'Biens à Louer',
+                      'Gestion Locative',
+                      'Investissement',
+                      'Contact',
+                    ]),
+                    const SizedBox(height: 40),
+                    _buildLinksColumn(context, 'Nos Services', [
+                      'Vente & Location',
+                      'Promotion Immobilière',
+                      'Conseil & Investissement',
+                      'Gestion Locative',
+                      'Immobilier d\'Entreprise',
+                      'Financement',
+                    ]),
+                    const SizedBox(height: 40),
+                    _buildContactColumn(),
+                  ],
+                ),
+                desktop: (context) => Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(flex: 2, child: _buildBrandColumn()),
+                    const SizedBox(width: 40),
+                    Expanded(
+                      child: _buildLinksColumn(context, 'Liens Rapides', [
+                        'Accueil',
+                        'Biens à Vendre',
+                        'Biens à Louer',
+                        'Gestion Locative',
+                        'Investissement',
+                        'Contact',
+                      ]),
+                    ),
+                    const SizedBox(width: 40),
+                    Expanded(
+                      child: _buildLinksColumn(context, 'Nos Services', [
+                        'Vente & Location',
+                        'Promotion Immobilière',
+                        'Conseil & Investissement',
+                        'Gestion Locative',
+                        'Immobilier d\'Entreprise',
+                        'Financement',
+                      ]),
+                    ),
+                    const SizedBox(width: 40),
+                    Expanded(flex: 1, child: _buildContactColumn()),
+                  ],
+                ),
               ),
             ),
           ),
@@ -298,6 +175,136 @@ class CustomFooter extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildBrandColumn() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: Color(0xFFFFD700),
+                borderRadius: BorderRadius.all(Radius.circular(4)),
+              ),
+              child: const Center(
+                child: CustomText(
+                  text: 'IM',
+                  type: CustomTextType.heroTitle,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            const CustomText(
+              text: 'ImmoElite',
+              type: CustomTextType.label,
+              color: Colors.white,
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        const SizedBox(
+          width: 280,
+          child: CustomText(
+            text:
+                'Votre partenaire de confiance pour tous vos projets immobiliers. Expertise, innovation et accompagnement personnalisé.',
+            type: CustomTextType.sectionDescription,
+            color: Colors.white70,
+          ),
+        ),
+        const SizedBox(height: 30),
+        Row(
+          children: [
+            _buildSocialIcon(Icons.facebook),
+            const SizedBox(width: 12),
+            _buildSocialIcon(Icons.camera_alt),
+            const SizedBox(width: 12),
+            _buildSocialIcon(Icons.business_center),
+            const SizedBox(width: 12),
+            _buildSocialIcon(Icons.alternate_email),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLinksColumn(
+    BuildContext context,
+    String title,
+    List<String> links,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CustomText(
+          text: title,
+          type: CustomTextType.label,
+          fontSize: 16,
+          color: Colors.white,
+        ),
+        const SizedBox(height: 20),
+        ...links.map((link) => _buildFooterLink(context, link)),
+      ],
+    );
+  }
+
+  Widget _buildContactColumn() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const CustomText(
+          text: 'Contact',
+          type: CustomTextType.label,
+          fontSize: 16,
+          color: Colors.white,
+        ),
+        const SizedBox(height: 20),
+        _buildContactItem(icon: Icons.phone, text: '+33 1 23 45 67 89'),
+        const SizedBox(height: 12),
+        _buildContactItem(icon: Icons.email, text: 'contact@immobilier.fr'),
+        const SizedBox(height: 12),
+        _buildContactItem(
+          icon: Icons.location_on,
+          text: '123 Avenue des Champs-Élysées\n75008 Paris, France',
+        ),
+        const SizedBox(height: 25),
+        Container(
+          decoration: BoxDecoration(
+            color: const Color(0xFF25D366),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(8),
+              onTap: () {},
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.message, color: Colors.white, size: 20),
+                    SizedBox(width: 8),
+                    CustomText(
+                      text: 'WhatsApp',
+                      type: CustomTextType.sectionDescription,
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'colors.dart';
 
 // Typography avec styles Flutter par défaut (sans GoogleFonts)
 class AppTypography {
@@ -10,6 +11,14 @@ class AppTypography {
     fontWeight: FontWeight.bold,
     fontSize: 14,
     color: Colors.white, // Gold
+    letterSpacing: 1.5,
+  );
+
+  static const TextStyle sectionTaglinePrimary = TextStyle(
+    fontFamily: 'Lato',
+    fontWeight: FontWeight.bold,
+    fontSize: 14,
+    color: AppColors.primary, // Gold
     letterSpacing: 1.5,
   );
 

@@ -242,14 +242,19 @@ class _RealEstatePageState extends State<RealEstatePage> {
     );
   }
 
+  // --- LOGIQUE FILTRES MISE A JOUR (1000px) ---
   Widget _buildSearchAndFilters() {
     final size = MediaQuery.of(context).size;
+
+    // Si l'écran est inférieur à 1000px, on passe en vertical
+    final bool useVerticalLayout = size.width < 1060;
 
     return Center(
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         margin: const EdgeInsets.only(top: 40),
-        width: size.width * 0.6,
+        // On agrandit le conteneur si on est sur un écran < 1000px
+        width: useVerticalLayout ? size.width * 0.9 : size.width * 0.75,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -264,12 +269,44 @@ class _RealEstatePageState extends State<RealEstatePage> {
         ),
         child: Column(
           children: [
-            Row(
-              children: [
-                Expanded(flex: 2, child: _buildSearchBar()),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildDropdown(
+            if (!useVerticalLayout)
+              // --- VERSION HORIZONTALE (> 1000px) ---
+              Row(
+                children: [
+                  Expanded(flex: 2, child: _buildSearchBar()),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildDropdown(
+                      index: 0,
+                      value: _selectedTransaction,
+                      items: _transactions,
+                      onChanged: (value) =>
+                          setState(() => _selectedTransaction = value!),
+                      hint: 'Transaction',
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildDropdown(
+                      index: 1,
+                      value: _selectedType,
+                      items: _types,
+                      onChanged: (value) =>
+                          setState(() => _selectedType = value!),
+                      hint: 'Type',
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  _buildFilterButton(),
+                ],
+              )
+            else
+              // --- VERSION VERTICALE (< 1000px) ---
+              Column(
+                children: [
+                  _buildSearchBar(),
+                  const SizedBox(height: 12),
+                  _buildDropdown(
                     index: 0,
                     value: _selectedTransaction,
                     items: _transactions,
@@ -277,10 +314,8 @@ class _RealEstatePageState extends State<RealEstatePage> {
                         setState(() => _selectedTransaction = value!),
                     hint: 'Transaction',
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: _buildDropdown(
+                  const SizedBox(height: 12),
+                  _buildDropdown(
                     index: 1,
                     value: _selectedType,
                     items: _types,
@@ -288,70 +323,82 @@ class _RealEstatePageState extends State<RealEstatePage> {
                         setState(() => _selectedType = value!),
                     hint: 'Type',
                   ),
-                ),
-                const SizedBox(width: 16),
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: _showFilters
-                        ? AppColors.primary
-                        : const Color(0xFFF8F9FA),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: _showFilters
-                          ? AppColors.primary
-                          : Colors.grey.shade300,
-                    ),
-                  ),
-                  child: TextButton.icon(
-                    onPressed: () =>
-                        setState(() => _showFilters = !_showFilters),
-                    icon: Icon(
-                      Icons.tune,
-                      color: _showFilters ? Colors.black : Colors.grey.shade700,
-                    ),
-                    label: CustomText(
-                      text: "Filtres",
-                      type: CustomTextType.button,
-                      color: _showFilters ? Colors.black : Colors.grey.shade700,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+                  const SizedBox(height: 12),
+                  SizedBox(width: double.infinity, child: _buildFilterButton()),
+                ],
+              ),
+
             if (_showFilters) ...[
               const SizedBox(height: 24),
               const Divider(height: 1),
               const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildSliderFilter(
-                      "Budget",
-                      _minPrice,
-                      0,
-                      2000000,
-                      (val) => setState(() => _minPrice = val),
-                      (val) => "${val.round()} - 2 000 000 €",
-                    ),
-                  ),
-                  const SizedBox(width: 40),
-                  Expanded(
-                    child: _buildSliderFilter(
-                      "Surface",
-                      _minSurface,
-                      0,
-                      500,
-                      (val) => setState(() => _minSurface = val),
-                      (val) => "${val.round()} - 500 m²",
-                    ),
-                  ),
-                ],
-              ),
+              if (!useVerticalLayout)
+                Row(
+                  children: [
+                    Expanded(child: _buildPriceSlider()),
+                    const SizedBox(width: 40),
+                    Expanded(child: _buildSurfaceSlider()),
+                  ],
+                )
+              else
+                Column(
+                  children: [
+                    _buildPriceSlider(),
+                    const SizedBox(height: 24),
+                    _buildSurfaceSlider(),
+                  ],
+                ),
             ],
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildFilterButton() {
+    return Container(
+      height: 50,
+      decoration: BoxDecoration(
+        color: _showFilters ? AppColors.primary : const Color(0xFFF8F9FA),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: _showFilters ? AppColors.primary : Colors.grey.shade300,
+        ),
+      ),
+      child: TextButton.icon(
+        onPressed: () => setState(() => _showFilters = !_showFilters),
+        icon: Icon(
+          Icons.tune,
+          color: _showFilters ? Colors.black : Colors.grey.shade700,
+        ),
+        label: CustomText(
+          text: "Filtres",
+          type: CustomTextType.button,
+          color: _showFilters ? Colors.black : Colors.grey.shade700,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPriceSlider() {
+    return _buildSliderFilter(
+      "Budget",
+      _minPrice,
+      0,
+      2000000,
+      (val) => setState(() => _minPrice = val),
+      (val) => "${val.round()} - 2 000 000 €",
+    );
+  }
+
+  Widget _buildSurfaceSlider() {
+    return _buildSliderFilter(
+      "Surface",
+      _minSurface,
+      0,
+      500,
+      (val) => setState(() => _minSurface = val),
+      (val) => "${val.round()} - 500 m²",
     );
   }
 
@@ -411,10 +458,7 @@ class _RealEstatePageState extends State<RealEstatePage> {
       child: TextField(
         decoration: InputDecoration(
           hintText: 'Rechercher par ville...',
-          // Using raw TextStyle from AppTypography because InputDecoration expects TextStyle
-          hintStyle: AppTypography.sectionDescription.copyWith(
-            color: Colors.grey,
-          ),
+          hintStyle: const TextStyle(fontSize: 14, color: Colors.grey),
           prefixIcon: Icon(Icons.search, color: Colors.grey.shade500),
           border: InputBorder.none,
           contentPadding: const EdgeInsets.symmetric(
@@ -481,9 +525,8 @@ class _RealEstatePageState extends State<RealEstatePage> {
                           : null,
                       child: CustomText(
                         text: item,
-                        type: isSelected
-                            ? CustomTextType.label
-                            : CustomTextType.label,
+                        type: CustomTextType.label,
+                        color: isSelected ? Colors.black : Colors.black87,
                       ),
                     ),
                   ),
@@ -520,9 +563,17 @@ class _RealEstatePageState extends State<RealEstatePage> {
   Widget _buildPropertiesGrid() {
     final size = MediaQuery.of(context).size;
 
+    // --- SYNCHRONISATION CONTENEUR GRILLE AVEC FILTRES ---
+    double gridContainerWidth;
+    if (size.width < 1000) {
+      gridContainerWidth = size.width * 0.9;
+    } else {
+      gridContainerWidth = size.width * 0.75;
+    }
+
     return Center(
       child: SizedBox(
-        width: size.width * 0.6,
+        width: gridContainerWidth,
         child: Container(
           padding: const EdgeInsets.only(bottom: 80),
           child: Column(
@@ -539,11 +590,25 @@ class _RealEstatePageState extends State<RealEstatePage> {
                 ],
               ),
               const SizedBox(height: 32),
+
               LayoutBuilder(
                 builder: (context, constraints) {
                   const double spacing = 24;
+                  int columns;
+
+                  // --- LOGIQUE GRILLE 600/800 ---
+                  // On garde ça pour que la grille soit jolie
+                  if (constraints.maxWidth < 600) {
+                    columns = 1;
+                  } else if (constraints.maxWidth <= 800) {
+                    columns = 2;
+                  } else {
+                    columns = 3;
+                  }
+
                   final double cardWidth =
-                      (constraints.maxWidth - (spacing * 2)) / 3;
+                      (constraints.maxWidth - (spacing * (columns - 1))) /
+                      columns;
 
                   return Wrap(
                     spacing: spacing,
@@ -578,7 +643,6 @@ class _PropertyCardState extends State<PropertyCard> {
 
   @override
   Widget build(BuildContext context) {
-    // Logique de couleur pour le statut
     final String status = widget.property['status'].toString().toUpperCase();
     final Color statusColor = (status == 'À LOUER') ? Colors.blue : Colors.red;
 
@@ -615,6 +679,7 @@ class _PropertyCardState extends State<PropertyCard> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Stack(
                 children: [
@@ -641,7 +706,9 @@ class _PropertyCardState extends State<PropertyCard> {
                   Positioned(
                     top: 12,
                     left: 12,
-                    child: Row(
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -659,7 +726,6 @@ class _PropertyCardState extends State<PropertyCard> {
                             fontSize: 12,
                           ),
                         ),
-                        const SizedBox(width: 8),
                         Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 8,
@@ -701,11 +767,18 @@ class _PropertyCardState extends State<PropertyCard> {
                   Positioned(
                     bottom: 12,
                     left: 12,
-                    child: CustomText(
-                      text: widget.property['price'],
-                      type: CustomTextType.cardTitle,
-                      color: Colors.white,
-                      fontSize: 18,
+                    right: 12,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: CustomText(
+                          text: widget.property['price'],
+                          type: CustomTextType.cardTitle,
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -742,18 +815,18 @@ class _PropertyCardState extends State<PropertyCard> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    Row(
+                    Wrap(
+                      spacing: 16,
+                      runSpacing: 8,
                       children: [
                         _buildDetailItem(
                           Icons.crop_free,
                           widget.property['surface'],
                         ),
-                        const SizedBox(width: 16),
                         _buildDetailItem(
                           Icons.bed_outlined,
                           '${widget.property['rooms']} ch.',
                         ),
-                        const SizedBox(width: 16),
                         _buildDetailItem(
                           Icons.bathtub_outlined,
                           '${widget.property['bathrooms']} sdb',
@@ -772,14 +845,18 @@ class _PropertyCardState extends State<PropertyCard> {
 
   Widget _buildDetailItem(IconData icon, String text) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, size: 16, color: Colors.grey.shade500),
         const SizedBox(width: 6),
-        CustomText(
-          text: text,
-          type: CustomTextType
-              .sectionDescription, // Or caption with override if needed
-          color: Colors.grey.shade600,
+        Flexible(
+          child: CustomText(
+            text: text,
+            type: CustomTextType.sectionDescription,
+            fontSize: 13,
+            color: Colors.grey.shade600,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );

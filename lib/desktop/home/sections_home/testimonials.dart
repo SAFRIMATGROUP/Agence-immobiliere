@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:flutter/material.dart';
 import '../../../constants/colors.dart';
 import '../../../widgets/custom_text.dart';
@@ -88,10 +89,16 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final double contentWidth = getValueForScreenType<double>(
+      context: context,
+      mobile: size.width * 0.9,
+      tablet: size.width * 0.8,
+      desktop: size.width * 0.6,
+    );
 
     return Center(
       child: SizedBox(
-        width: size.width * 0.6,
+        width: contentWidth,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 80),
           child: Column(
@@ -105,25 +112,31 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                 text: "Ce Que Disent Nos Clients",
                 type: CustomTextType.sectionTitle,
               ),
-
               const SizedBox(height: 60),
-
               Row(
                 children: [
-                  _buildArrowButton(
-                    icon: Icons.chevron_left,
-                    onTap: () {
-                      _resetTimer();
-                      _pageController.previousPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                  ),
-
+                  if (getValueForScreenType<bool>(
+                    context: context,
+                    mobile: false,
+                    desktop: true,
+                  ))
+                    _buildArrowButton(
+                      icon: Icons.chevron_left,
+                      onTap: () {
+                        _resetTimer();
+                        _pageController.previousPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                    ),
                   Expanded(
                     child: SizedBox(
-                      height: 400,
+                      height: getValueForScreenType<double>(
+                        context: context,
+                        mobile: 500,
+                        desktop: 400,
+                      ),
                       // AJOUT : MouseRegion pour détecter le survol
                       child: MouseRegion(
                         onEnter: (_) {
@@ -147,9 +160,13 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                                 index % _testimonials.length;
 
                             return Padding(
-                              padding: const EdgeInsets.fromLTRB(
+                              padding: EdgeInsets.fromLTRB(
                                 20,
-                                50,
+                                getValueForScreenType<double>(
+                                  context: context,
+                                  mobile: 30,
+                                  desktop: 50,
+                                ),
                                 20,
                                 30,
                               ),
@@ -162,22 +179,24 @@ class _TestimonialsSectionState extends State<TestimonialsSection> {
                       ),
                     ),
                   ),
-
-                  _buildArrowButton(
-                    icon: Icons.chevron_right,
-                    onTap: () {
-                      _resetTimer();
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                  ),
+                  if (getValueForScreenType<bool>(
+                    context: context,
+                    mobile: false,
+                    desktop: true,
+                  ))
+                    _buildArrowButton(
+                      icon: Icons.chevron_right,
+                      onTap: () {
+                        _resetTimer();
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                    ),
                 ],
               ),
-
               const SizedBox(height: 10),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(_testimonials.length, (index) {
@@ -242,7 +261,14 @@ class _TestimonialCard extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 40),
+          padding: EdgeInsets.symmetric(
+            horizontal: getValueForScreenType<double>(
+              context: context,
+              mobile: 24,
+              desktop: 60,
+            ),
+            vertical: 40,
+          ),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
@@ -274,7 +300,11 @@ class _TestimonialCard extends StatelessWidget {
                 text: "\"${data['content']}\"",
                 type: CustomTextType.sectionDescriptionBlack,
                 fontStyle: FontStyle.italic,
-                fontSize: 20,
+                fontSize: getValueForScreenType<double>(
+                  context: context,
+                  mobile: 16,
+                  desktop: 20,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
@@ -316,7 +346,11 @@ class _TestimonialCard extends StatelessWidget {
         ),
         Positioned(
           top: -25,
-          left: 40,
+          left: getValueForScreenType<double>(
+            context: context,
+            mobile: 20,
+            desktop: 40,
+          ),
           child: Container(
             width: 50,
             height: 50,

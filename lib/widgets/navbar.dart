@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/colors.dart';
+
 import 'custom_text.dart';
 
 class Navbar extends StatefulWidget implements PreferredSizeWidget {
@@ -111,6 +112,14 @@ class _NavbarState extends State<Navbar> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
+    if (size.width < 600) {
+      return _buildMobileNavbar(context, size);
+    } else {
+      return _buildDesktopNavbar(context, size);
+    }
+  }
+
+  Widget _buildDesktopNavbar(BuildContext context, Size size) {
     return Container(
       height: kToolbarHeight,
       width: double.infinity,
@@ -119,82 +128,127 @@ class _NavbarState extends State<Navbar> {
       ),
       child: Center(
         child: SizedBox(
-          width: size.width * 0.7,
+          // Ajustement de la largeur pour être un peu plus permissif
+          width: size.width > 1400 ? size.width * 0.7 : size.width * 0.95,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const CustomText(
-                      text: 'IM',
-                      type: CustomTextType.label,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.background,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  CustomText(
-                    text: 'ImmoElite',
-                    type: CustomTextType.label,
-                    fontWeight: FontWeight.bold,
-                    color: widget.isScrolled ? Colors.black : Colors.white,
-                    fontSize: 16,
-                  ),
-                ],
-              ),
+              // Le Logo reste fixe à gauche
+              _buildLogo(),
 
-              Row(
-                children: [
-                  _buildNavItem(context, 'Accueil', 'home'),
-                  _buildNavItem(context, 'Biens', 'real-estate'),
-                  _buildNavItem(
-                    context,
-                    'Services',
-                    'services',
-                    isDropdown: true,
-                  ),
-                  _buildNavItem(context, 'Gestion Locative', 'rental'),
-                  _buildNavItem(context, 'Investir', 'invest'),
-                  _buildNavItem(context, 'À Propos', 'about'),
-                  _buildNavItem(context, 'Contact', 'contact'),
-                  const SizedBox(width: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/real-estate');
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: AppColors.background,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 12,
+              const SizedBox(width: 20), // Espace entre logo et menu
+              // MENU DÉFILABLE
+              // Expanded force le menu à prendre tout l'espace restant
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  // On enlève l'effet de "bounce" sur iOS/Android pour faire plus "web"
+                  physics: const ClampingScrollPhysics(),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildNavItem(context, 'Accueil', 'home'),
+                      _buildNavItem(context, 'Biens', 'real-estate'),
+                      _buildNavItem(
+                        context,
+                        'Services',
+                        'services',
+                        isDropdown: true,
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
+                      _buildNavItem(context, 'Gestion Locative', 'rental'),
+                      _buildNavItem(context, 'Investir', 'invest'),
+                      _buildNavItem(context, 'À Propos', 'about'),
+                      _buildNavItem(context, 'Contact', 'contact'),
+
+                      const SizedBox(width: 20),
+
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            '/real-estate',
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: AppColors.background,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                        ),
+                        child: const CustomText(
+                          text: 'Voir les Biens',
+                          type: CustomTextType.button,
+                          color: AppColors.background,
+                        ),
                       ),
-                    ),
-                    child: const CustomText(
-                      text: 'Voir les Biens',
-                      type: CustomTextType.button,
-                      color: AppColors.background,
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildMobileNavbar(BuildContext context, Size size) {
+    return Container(
+      height: kToolbarHeight,
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(
+        color: widget.isScrolled ? Colors.white : Colors.white.withOpacity(0.9),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildLogo(),
+          IconButton(
+            icon: const Icon(Icons.menu, color: Colors.black),
+            onPressed: () {
+              Scaffold.of(context).openEndDrawer();
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLogo() {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: const CustomText(
+            text: 'IM',
+            type: CustomTextType.label,
+            fontWeight: FontWeight.bold,
+            color: AppColors.background,
+            fontSize: 16,
+          ),
+        ),
+        const SizedBox(width: 8),
+        CustomText(
+          text: 'ImmoElite',
+          type: CustomTextType.label,
+          fontWeight: FontWeight.bold,
+          color: widget.isScrolled || MediaQuery.of(context).size.width < 600
+              ? Colors
+                    .black // Noir sur mobile ou si scrollé
+              : Colors.white, // Blanc sinon
+          fontSize: 16,
+        ),
+      ],
     );
   }
 
@@ -207,7 +261,6 @@ class _NavbarState extends State<Navbar> {
     final bool isCurrentPage = widget.currentPage == route;
     final bool isDropdownOpen = isDropdown && _overlayEntry != null;
 
-    // Use specific types based on state instead of fontWeight param
     final FontWeight fontWeight = (isCurrentPage || isDropdownOpen)
         ? FontWeight.bold
         : FontWeight.w500;
@@ -267,7 +320,7 @@ class _NavbarState extends State<Navbar> {
                 children: [
                   CustomText(
                     text: title,
-                    type: CustomTextType.label, // Dynamic type selection
+                    type: CustomTextType.label,
                     fontWeight: fontWeight,
                     color: isCurrentPage
                         ? AppColors.primary

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import '../../../constants/colors.dart';
 import '../../../widgets/custom_text.dart';
 
@@ -46,6 +47,16 @@ class WhyChooseUsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    // Adaptation de la largeur du conteneur global
+    final double contentWidth = getValueForScreenType<double>(
+      context: context,
+      mobile: size.width * 0.9,
+      tablet: size.width * 0.85,
+      desktop: size.width * 0.7,
+    );
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 80),
@@ -55,7 +66,7 @@ class WhyChooseUsSection extends StatelessWidget {
           // Section titre avec bouton
           Center(
             child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.6,
+              width: contentWidth,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,12 +98,29 @@ class WhyChooseUsSection extends StatelessWidget {
 
           Center(
             child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.6,
+              width: contentWidth,
+              // --- LOGIQUE DE GRILLE 600px / 800px ---
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   const double spacing = 24;
+                  int columns;
+
+                  // < 600px -> 1 colonne
+                  if (constraints.maxWidth < 600) {
+                    columns = 1;
+                  }
+                  // Entre 600 et 800 (inclus) -> 2 colonnes
+                  else if (constraints.maxWidth <= 800) {
+                    columns = 2;
+                  }
+                  // > 800 -> 3 colonnes
+                  else {
+                    columns = 3;
+                  }
+
                   final double cardWidth =
-                      (constraints.maxWidth - (spacing * 2)) / 3;
+                      (constraints.maxWidth - (spacing * (columns - 1))) /
+                      columns;
 
                   return Wrap(
                     spacing: spacing,
@@ -133,6 +161,7 @@ class _FeatureCardState extends State<FeatureCard> {
         duration: const Duration(milliseconds: 200),
         width: widget.width,
         padding: const EdgeInsets.all(32),
+        // On évite de scaler sur mobile pour éviter les débordements
         transform: Matrix4.identity()..scale(_isHovered ? 1.05 : 1.0),
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 77, 108, 141),
@@ -158,7 +187,8 @@ class _FeatureCardState extends State<FeatureCard> {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize:
+              MainAxisSize.min, // Important pour éviter overflow vertical
           children: [
             AnimatedContainer(
               duration: const Duration(milliseconds: 200),
